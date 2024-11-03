@@ -26,4 +26,8 @@
     <ProjectReference Include="..\TableTree.Data\TableTree.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Product\" />
+  </ItemGroup>
+
 </Project>

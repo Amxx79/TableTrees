@@ -6,9 +6,9 @@ namespace TableTree.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ProductController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<ProductController> logger)
         {
             _logger = logger;
         }

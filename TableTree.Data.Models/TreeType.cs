@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using static TableTree.Common.EntityValidationContants.TreeType;
 
 namespace TableTree.Data.Models
 {
     public class TreeType
     {
         public Guid Id { get; set; }
+        [MaxLength(NameMaxLength)]
+        [MinLength(NameMinLength)]
+        [Required]
         public string Name { get; set; }
         public IEnumerable<Product> Products { get; set; } = new HashSet<Product>();
     }

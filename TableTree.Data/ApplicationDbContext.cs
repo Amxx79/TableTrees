@@ -9,13 +9,19 @@ namespace TableTree.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
+        public ApplicationDbContext()
+        {
+
+        }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Product> Tables {get; set;}
+        public DbSet<Product> Products {get; set;}
         public DbSet<Category> Categories {get; set; }
+        public DbSet<TreeType> TypeOfTrees { get; set; }
+        public DbSet<ProductClient> ProductsClients { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
