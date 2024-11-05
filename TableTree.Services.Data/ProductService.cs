@@ -44,7 +44,6 @@ namespace TableTree.Services.Data
             return result;
 
         }
-
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
         {
             IEnumerable<ProductViewModel> products = await this.repository
@@ -82,7 +81,6 @@ namespace TableTree.Services.Data
 
             return model;
         }
-
         public async Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id)
         {
             var model = this.repository

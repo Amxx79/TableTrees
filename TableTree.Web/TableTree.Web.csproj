@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TableTree.Data.Models\TableTree.Data.Models.csproj" />
     <ProjectReference Include="..\TableTree.Data\TableTree.Data.csproj" />
+    <ProjectReference Include="..\TableTree.Services.Data\TableTree.Services.Data.csproj" />
     <ProjectReference Include="..\TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj" />
   </ItemGroup>
 

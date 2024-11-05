@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TableTree.Data;
 using TableTree.Data.Models;
+using TableTree.Data.Repository;
+using TableTree.Data.Repository.Interfaces;
+using TableTree.Services.Data;
+using TableTree.Services.Data.Interfaces;
 
 namespace TableTree.Web
 {
@@ -26,9 +30,13 @@ namespace TableTree.Web
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddUserManager<UserManager<ApplicationUser>>();
 
+            builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+
             builder.Services.AddMvc();
 
             builder.Services.AddControllersWithViews();
+
 
             var app = builder.Build();
 

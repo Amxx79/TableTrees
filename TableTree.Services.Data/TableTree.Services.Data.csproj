@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TableTree.Web\TableTree.Web.csproj" />
+    <ProjectReference Include="..\TableTree.Data\TableTree.Data.csproj" />
+    <ProjectReference Include="..\TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

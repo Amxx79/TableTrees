@@ -1,22 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TableTree.Data.Models;
+using TableTree.Services.Data.Interfaces;
 using TableTree.Web.Models;
 
 namespace TableTree.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<ProductController> logger;
+        private readonly IProductService productService;
 
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(ILogger<ProductController> logger, IProductService productService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.productService = productService;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await productService.GetAllProductsAsync();
+            return View(model);
         }
     }
 }
