@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Services.Data.Interfaces
 {
     public interface IProductService
     {
+        Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
+        Task AddProductAsync(AddProductInputModel model);
+        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
+        Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id);
+        Task<bool> EditProductAsync(EditProductViewModel model);
 
     }
 }
