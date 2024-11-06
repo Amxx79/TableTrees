@@ -38,8 +38,6 @@ namespace TableTree.Web.Controllers
             {
                 return View(model);
             }
-            model.Categories = await this.productService.GetAllCategories();
-            model.TreeTypes = await this.productService.GetAllTreeTypes();
 
             await this
                 .productService.AddProductAsync(model);
