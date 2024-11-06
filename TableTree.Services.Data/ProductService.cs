@@ -44,6 +44,7 @@ namespace TableTree.Services.Data
             return result;
 
         }
+
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
         {
             IEnumerable<ProductViewModel> products = await this.repository
@@ -53,12 +54,21 @@ namespace TableTree.Services.Data
                     Name = p.Name,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
-                    TreeType = p.TreeType.ToString(),
+                    TreeType = p.TreeType.Name,
                 })
                 .ToArrayAsync();
                 
 
             return products;
+        }
+
+        public Task<IEnumerable<Category>> GetAllCategories()
+        {
+            return this.repository.GetAllCategories();
+        }
+        public Task<IEnumerable<TreeType>> GetAllTreeTypes()
+        {
+            return this.repository.GetAllTreeTypes();
         }
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id)

@@ -1,4 +1,5 @@
-﻿using TableTree.Web.ViewModels.Product;
+﻿using TableTree.Data.Models;
+using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Services.Data.Interfaces
 {
@@ -9,6 +10,7 @@ namespace TableTree.Services.Data.Interfaces
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
         Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id);
         Task<bool> EditProductAsync(EditProductViewModel model);
-
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<IEnumerable<TreeType>> GetAllTreeTypes();
     }
 }

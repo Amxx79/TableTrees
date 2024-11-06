@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
-using TableTree.Web.Models;
+using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Web.Controllers
 {
@@ -22,6 +20,30 @@ namespace TableTree.Web.Controllers
         {
             var model = await productService.GetAllProductsAsync();
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new AddProductInputModel();
+            model.Categories = await this.productService.GetAllCategories();
+            model.TreeTypes = await this.productService.GetAllTreeTypes();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddProductInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            model.Categories = await this.productService.GetAllCategories();
+            model.TreeTypes = await this.productService.GetAllTreeTypes();
+
+            await this
+                .productService.AddProductAsync(model);
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }

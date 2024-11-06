@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TableTree.Data.Models;
 
 namespace TableTree.Data.Repository.Interfaces
 {
@@ -14,6 +15,8 @@ namespace TableTree.Data.Repository.Interfaces
         IEnumerable<TType> GetAll();
         Task<IEnumerable<TType>> GetAllAsync();
         IQueryable<TType> GetAllAttached();
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<IEnumerable<TreeType>> GetAllTreeTypes();
 
         //Add methods
         bool Add(TType item);

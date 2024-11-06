@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 
 namespace TableTree.Data.Repository
@@ -79,6 +80,20 @@ namespace TableTree.Data.Repository
         public IQueryable<TType> GetAllAttached()
         {
             return dbSet.AsQueryable();
+        }
+
+        public async Task<IEnumerable<Category>> GetAllCategories()
+        {
+            return await this.dbContext
+                .Categories
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TreeType>> GetAllTreeTypes()
+        {
+            return await this.dbContext
+                .TypeOfTrees
+                .ToListAsync();
         }
 
         public TType GetById(Guid Id)
