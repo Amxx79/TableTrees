@@ -49,6 +49,7 @@ namespace TableTree.Services.Data
         {
             IEnumerable<ProductViewModel> products = await this.repository
                 .GetAllAttached()
+                .Where(p => p.IsDeleted == false)
                 .Select(p => new ProductViewModel()
                 {
                     Name = p.Name,
@@ -57,7 +58,6 @@ namespace TableTree.Services.Data
                     TreeType = p.TreeType.Name,
                 })
                 .ToArrayAsync();
-                
 
             return products;
         }
@@ -66,6 +66,7 @@ namespace TableTree.Services.Data
         {
             return this.repository.GetAllCategories();
         }
+
         public Task<IEnumerable<TreeType>> GetAllTreeTypes()
         {
             return this.repository.GetAllTreeTypes();
@@ -106,6 +107,21 @@ namespace TableTree.Services.Data
                 .FirstOrDefault(p => p.Id.ToLower() == id.ToString().ToLower());
 
             return model;
+        }
+
+        public async Task SoftDelete(Guid id)
+        {
+            var item = await this.repository
+                .GetByIdAsync(id);
+
+            item.IsDeleted = true;
+            await this.repository.SaveChangesAsync();
+        }
+
+        public Task<Product> GetProductById(Guid id)
+        {
+            var product = this.repository.GetByIdAsync(id);
+            return product;
         }
     }
 }

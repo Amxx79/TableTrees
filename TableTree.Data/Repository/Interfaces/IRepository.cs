@@ -23,10 +23,16 @@ namespace TableTree.Data.Repository.Interfaces
         Task<bool> AddAsync(TType item);
         void AddRange(TType[] items);
         void AddRangeAsync(TType[] items);
-        bool Delete(TType item);
 
         //Update methods
         bool Update(TType item);
         Task<bool> UpdateAsync(TType item);
+
+        //Delete methods
+        bool Delete(TType item);
+
+        //Save methods
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

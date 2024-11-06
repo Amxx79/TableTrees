@@ -43,5 +43,14 @@ namespace TableTree.Web.Controllers
                 .productService.AddProductAsync(model);
             return this.RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var product = this.productService
+                .SoftDelete(id);
+
+            return this.RedirectToAction(nameof(Index));
+        }
     }
 }

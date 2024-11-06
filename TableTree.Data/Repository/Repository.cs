@@ -95,7 +95,6 @@ namespace TableTree.Data.Repository
                 .TypeOfTrees
                 .ToListAsync();
         }
-
         public TType GetById(Guid Id)
         {
             TType entity =  dbSet.Find(Id);
@@ -108,6 +107,17 @@ namespace TableTree.Data.Repository
             TType entity = await dbSet.FindAsync(Id);
 
             return entity;
+        }
+
+        public int SaveChanges()
+        {
+            return this.dbContext.SaveChanges();
+            
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await this.dbContext.SaveChangesAsync();
         }
 
         public bool Update(TType item)
@@ -125,7 +135,6 @@ namespace TableTree.Data.Repository
                 return false;
             }
         }
-
         public async Task<bool> UpdateAsync(TType item)
         {
             try
