@@ -13,6 +13,7 @@ namespace TableTree.Services.Data.Interfaces
         Task<Product> GetProductById(Guid id);
         Task<IEnumerable<Category>> GetAllCategories();
         Task<IEnumerable<TreeType>> GetAllTreeTypes();
+        Task<DeleteProductViewModel> GetProductForDelete(Guid id);
         Task SoftDelete(Guid id);
     }
 }

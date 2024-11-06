@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts;
 using TableTree.Data;
 using TableTree.Data.Models;
 using TableTree.Data.Repository;
@@ -63,6 +64,11 @@ namespace TableTree.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "routeForId",
+                pattern: "{controller=Product}/{action=Delete}/{id?}");
+
             app.MapRazorPages();
 
             app.Run();

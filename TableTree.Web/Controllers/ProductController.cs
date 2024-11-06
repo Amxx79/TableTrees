@@ -45,10 +45,10 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var product = this.productService
-                .SoftDelete(id);
+            var guid = Guid.Parse(id);
+            await this.productService.SoftDelete(guid);
 
             return this.RedirectToAction(nameof(Index));
         }

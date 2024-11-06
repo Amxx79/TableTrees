@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106222840_Category_Data_Seeding")]
+    partial class Category_Data_Seeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,9 +270,7 @@ namespace TableTree.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("/images/no-image.jpg");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -323,23 +324,6 @@ namespace TableTree.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypeOfTrees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("632bfa2f-aa06-4c1b-913d-33ef43a44d34"),
-                            Name = "Tree"
-                        },
-                        new
-                        {
-                            Id = new Guid("133a6af3-1b7d-4d6e-aa41-33be63184766"),
-                            Name = "Beech"
-                        },
-                        new
-                        {
-                            Id = new Guid("401dd5cd-c271-4960-84ce-0b364c96f039"),
-                            Name = "Оак"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

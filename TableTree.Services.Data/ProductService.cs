@@ -52,6 +52,7 @@ namespace TableTree.Services.Data
                 .Where(p => p.IsDeleted == false)
                 .Select(p => new ProductViewModel()
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
@@ -105,6 +106,24 @@ namespace TableTree.Services.Data
                     ImageUrl = p.ImageUrl,
                 })
                 .FirstOrDefault(p => p.Id.ToLower() == id.ToString().ToLower());
+
+            return model;
+        }
+
+        public async Task<DeleteProductViewModel> GetProductForDelete(Guid id)
+        {
+            var model = this.repository
+                .GetAllAttached()
+                .Select(p => new DeleteProductViewModel()
+                {
+                    Id = p.Id.ToString(),
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    Category = p.Category.Name,
+                    TreeType = p.TreeType.Name,
+                })
+                .FirstOrDefault();
 
             return model;
         }
