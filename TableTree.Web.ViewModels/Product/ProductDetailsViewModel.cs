@@ -4,6 +4,7 @@ namespace TableTree.Web.ViewModels.Product
 {
     public class ProductDetailsViewModel
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

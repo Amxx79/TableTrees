@@ -1,0 +1,30 @@
+﻿@using TableTree.Web.ViewModels.Product;
+@model ProductDetailsViewModel;
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="card mb-3">
+        <img src="@Model.ImageUrl" class="card-img-top img-fluid" style="max-height: 200px; object-fit: contain;" alt="Game Image">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text"><small class="text-muted">Category: @Model.Category.Name</small></p>
+            <p class="card-text"><small class="text-muted">Type of Tree: @Model.TreeType.Name</small></p>
+            <p class="card-text"><small class="text-dark">Description: @Model.Description</small></p>
+        </div>
+
+        <a asp-controller="Product" asp-action="Index" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Back to All Products</a>
+        <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
+        <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

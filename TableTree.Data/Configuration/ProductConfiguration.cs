@@ -42,7 +42,7 @@ namespace TableTree.Data.Configuration
         {
             IEnumerable<Product> products = new List<Product>()
             {
-                new Product()
+                new()
                 {
                     Id = Guid.NewGuid(),
                     Name = "Rustic Live Edge Tree Table",
@@ -53,8 +53,7 @@ namespace TableTree.Data.Configuration
                     CategoryId = Guid.Parse("A1042FEE-F95A-4BF3-A758-49B13CFF3E79"),
                     TreeTypeId = Guid.Parse("632BFA2F-AA06-4C1B-913D-33EF43A44D34"),
                 },
-                new Product
-                {
+                new() {
                     Id = Guid.NewGuid(),
                     Name = "Epoxy Resin River Table",
                     Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
@@ -64,7 +63,7 @@ namespace TableTree.Data.Configuration
                     CategoryId = Guid.Parse("A1042FEE-F95A-4BF3-A758-49B13CFF3E79"),
                     TreeTypeId = Guid.Parse("133A6AF3-1B7D-4D6E-AA41-33BE63184766"),
                 },
-                new Product
+                new()
                 {
                     Id = Guid.NewGuid(),
                     Name = "Reclaimed Wood Counter Top",

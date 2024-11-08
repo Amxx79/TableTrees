@@ -52,5 +52,14 @@ namespace TableTree.Web.Controllers
 
             return this.RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var guid = Guid.Parse(id);
+            var model = await this.productService.GetProductDetailsByIdAsync(guid);
+
+
+            return this.View(model);
+        }
     }
 }

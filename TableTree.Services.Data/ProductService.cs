@@ -83,6 +83,7 @@ namespace TableTree.Services.Data
 
             ProductDetailsViewModel model = new ProductDetailsViewModel()
             {
+                Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
