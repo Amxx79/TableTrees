@@ -25,6 +25,8 @@
                         <div class="col-12">
                             <div class="title-wrapper" style="height: 6em; overflow: hidden;">
                                 <h4 class="card-title mt-1">@product.Name</h4>
+                            <p class="card-text">Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
+
                             </div>
                         </div>
                     </div>

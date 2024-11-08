@@ -32,17 +32,34 @@ namespace TableTree.Services.Data
 
         public async Task<bool> EditProductAsync(EditProductViewModel model)
         {
-            Product product = new Product()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price,
-                ImageUrl = model.ImageUrl,
-            };
+            Product product = await this.GetProductByIdAsync(model.Id);
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.ImageUrl = model.ImageUrl;
+            product.Description = model.Description;
+            product.TreeTypeId = model.TreeType;
+            product.CategoryId = model.Category;
 
             bool result = await this.repository.UpdateAsync(product);
+            await this.repository.SaveChangesAsync();
             return result;
+        }
 
+        public bool EditProduct(EditProductViewModel model)
+        {
+            Product product = this.GetProductById(model.Id);
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.ImageUrl = model.ImageUrl;
+            product.Description = model.Description;
+            product.TreeTypeId = model.TreeType;
+            product.CategoryId = model.Category;
+
+            bool result = this.repository.Update(product);
+            this.repository.SaveChanges();
+            return result;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
@@ -63,12 +80,21 @@ namespace TableTree.Services.Data
             return products;
         }
 
-        public Task<IEnumerable<Category>> GetAllCategories()
+        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        {
+            return this.repository.GetAllCategoriesAsync();
+        }
+        public IEnumerable<Category> GetAllCategories()
         {
             return this.repository.GetAllCategories();
         }
 
-        public Task<IEnumerable<TreeType>> GetAllTreeTypes()
+        public Task<IEnumerable<TreeType>> GetAllTreeTypesAsync()
+        {
+            return this.repository.GetAllTreeTypesAsync();
+        }
+
+        public IEnumerable<TreeType> GetAllTreeTypes()
         {
             return this.repository.GetAllTreeTypes();
         }
@@ -100,13 +126,39 @@ namespace TableTree.Services.Data
                 .GetAllAttached()
                 .Select(p => new EditProductViewModel()
                 {
-                    Id = p.Id.ToString(),
+                    Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
+                    Category = p.Category.Id,
+                    TreeType = p.TreeType.Id,
                 })
-                .FirstOrDefault(p => p.Id.ToLower() == id.ToString().ToLower());
+                .FirstOrDefault(p => p.Id.ToString().ToLower() == id.ToString().ToLower());
+
+            return model;
+        }
+
+        public EditProductViewModel GetProductForEditById(Guid id)
+        {
+            EditProductViewModel? model = new EditProductViewModel();
+
+            model.Categories = this.repository.GetAllCategories();
+            model.TreeTypes = this.repository.GetAllTreeTypes();
+            
+            model = this.repository
+                .GetAll()
+                .Select(p => new EditProductViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    Category = p.Category.Id,
+                    TreeType = p.TreeType.Id,
+                })
+                .FirstOrDefault(p => p.Id.ToString().ToLower() == id.ToString().ToLower());
 
             return model;
         }
@@ -138,9 +190,15 @@ namespace TableTree.Services.Data
             await this.repository.SaveChangesAsync();
         }
 
-        public Task<Product> GetProductById(Guid id)
+        public Task<Product> GetProductByIdAsync(Guid id)
         {
             var product = this.repository.GetByIdAsync(id);
+            return product;
+        }
+
+        public Product GetProductById(Guid id)
+        {
+            var product = this.repository.GetById(id);
             return product;
         }
     }

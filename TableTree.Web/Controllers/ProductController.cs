@@ -26,8 +26,8 @@ namespace TableTree.Web.Controllers
         public async Task<IActionResult> Add()
         {
             var model = new AddProductInputModel();
-            model.Categories = await this.productService.GetAllCategories();
-            model.TreeTypes = await this.productService.GetAllTreeTypes();
+            model.Categories = await this.productService.GetAllCategoriesAsync();
+            model.TreeTypes = await this.productService.GetAllTreeTypesAsync();
             return View(model);
         }
 
@@ -58,8 +58,39 @@ namespace TableTree.Web.Controllers
             var guid = Guid.Parse(id);
             var model = await this.productService.GetProductDetailsByIdAsync(guid);
 
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var guid = Guid.Parse(id);
+            var model = this.productService
+                .GetProductForEditById(guid);
+
+
+            model.Categories = this.productService.GetAllCategories();
+            model.TreeTypes = this.productService.GetAllTreeTypes();
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            model.Categories = this.productService.GetAllCategories();
+            model.TreeTypes = this.productService.GetAllTreeTypes();
+
+            bool isUpdated = this.productService
+                .EditProduct(model);
+
+            return this.RedirectToAction(nameof(Index));
+
         }
     }
 }

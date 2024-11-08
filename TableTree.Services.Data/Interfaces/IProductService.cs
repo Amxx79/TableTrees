@@ -9,10 +9,15 @@ namespace TableTree.Services.Data.Interfaces
         Task AddProductAsync(AddProductInputModel model);
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
         Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id);
+        EditProductViewModel GetProductForEditById(Guid id);
         Task<bool> EditProductAsync(EditProductViewModel model);
-        Task<Product> GetProductById(Guid id);
-        Task<IEnumerable<Category>> GetAllCategories();
-        Task<IEnumerable<TreeType>> GetAllTreeTypes();
+        bool EditProduct(EditProductViewModel model);
+        Task<Product> GetProductByIdAsync(Guid id);
+        Product GetProductById(Guid id);
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
+        Task<IEnumerable<TreeType>> GetAllTreeTypesAsync();
+        IEnumerable<Category> GetAllCategories();
+        IEnumerable<TreeType> GetAllTreeTypes();
         Task<DeleteProductViewModel> GetProductForDelete(Guid id);
         Task SoftDelete(Guid id);
     }

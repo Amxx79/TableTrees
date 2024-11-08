@@ -82,22 +82,37 @@ namespace TableTree.Data.Repository
             return dbSet.AsQueryable();
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             return await this.dbContext
                 .Categories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TreeType>> GetAllTreeTypes()
+        public IEnumerable<Category> GetAllCategories()
+        {
+            return this.dbContext
+                .Categories
+                .ToList();
+        }
+
+        public async Task<IEnumerable<TreeType>> GetAllTreeTypesAsync()
         {
             return await this.dbContext
                 .TypeOfTrees
                 .ToListAsync();
         }
+
+        public IEnumerable<TreeType> GetAllTreeTypes()
+        {
+            return this.dbContext
+                .TypeOfTrees
+                .ToList();
+        }
+
         public TType GetById(Guid Id)
         {
-            TType entity =  dbSet.Find(Id);
+            TType entity = dbSet.Find(Id);
 
             return entity;
         }
@@ -135,6 +150,7 @@ namespace TableTree.Data.Repository
                 return false;
             }
         }
+
         public async Task<bool> UpdateAsync(TType item)
         {
             try
