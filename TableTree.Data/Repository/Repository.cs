@@ -127,7 +127,6 @@ namespace TableTree.Data.Repository
         public int SaveChanges()
         {
             return this.dbContext.SaveChanges();
-            
         }
 
         public async Task<int> SaveChangesAsync()
