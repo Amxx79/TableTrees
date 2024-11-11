@@ -90,7 +90,6 @@ namespace TableTree.Web.Controllers
                 .EditProduct(model);
 
             return this.RedirectToAction(nameof(Index));
-
         }
     }
 }
