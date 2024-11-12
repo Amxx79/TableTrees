@@ -37,5 +37,15 @@ namespace TableTree.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(string productId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await this.cartService.RemoveProduct(productId, userId);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

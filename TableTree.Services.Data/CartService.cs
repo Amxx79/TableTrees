@@ -73,6 +73,22 @@ namespace TableTree.Services.Data
                 return Task.CompletedTask;
         }
 
+        public async Task RemoveProduct(string productId, string userId)
+        {
+            Guid productIdentificator = Guid.Parse(productId);
+            Guid userIdentificator = Guid.Parse(userId);
+
+            ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
+                .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
+                pc.ApplicationUserId == userIdentificator);
+
+            if (addedToCartAlready != null)
+            {
+                this.productClientRepository.Delete(addedToCartAlready);
+                await this.productClientRepository.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync()
         {
             IEnumerable<ProductViewModel> model = await this.productClientRepository
