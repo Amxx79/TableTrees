@@ -17,18 +17,43 @@ namespace TableTree.Services.Data
             this.productRepository = productRepository;
         }
 
-        public async Task AddProductAsync(string productId, string userId)
+        //public async Task AddProductAsync(string productId, string userId)
+        //{
+        //    Guid productIdentificator = Guid.Parse(productId);
+        //    Guid userIdentificator = Guid.Parse(userId);
+
+        //    Product? product = this.productRepository
+        //        .GetById(productIdentificator);
+
+        //    if (product == null)
+        //    {
+        //        return;
+        //    }
+
+        //    ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
+        //        .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
+        //        pc.ApplicationUserId == userIdentificator);
+
+        //    if (addedToCartAlready == null)
+        //    {
+        //        ProductClient newProductInCartOfClient = new ProductClient()
+        //        {
+        //            ApplicationUserId = userIdentificator,
+        //            ProductId = productIdentificator,
+        //        };
+
+        //        await productClientRepository.AddAsync(newProductInCartOfClient);
+        //        await productClientRepository.SaveChangesAsync();
+        //    }
+        //}
+
+        public Task AddProductAsync(string productId, string userId)
         {
             Guid productIdentificator = Guid.Parse(productId);
             Guid userIdentificator = Guid.Parse(userId);
 
             Product? product = this.productRepository
                 .GetById(productIdentificator);
-
-            if (product == null)
-            {
-                return;
-            }
 
             ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
                 .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
@@ -42,9 +67,10 @@ namespace TableTree.Services.Data
                     ProductId = productIdentificator,
                 };
 
-                await productClientRepository.AddAsync(newProductInCartOfClient);
-                await productClientRepository.SaveChangesAsync();
+                productClientRepository.Add(newProductInCartOfClient);
+                productClientRepository.SaveChanges();
             }
+                return Task.CompletedTask;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync()

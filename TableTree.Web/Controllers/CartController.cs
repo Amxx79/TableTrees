@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
 
@@ -16,12 +18,24 @@ namespace TableTree.Web.Controllers
             this.cartService = cartService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var model = await this.cartService
                 .GetAllProductsInCartAsync();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddToCart(Guid id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            this.cartService
+                .AddProductAsync(id.ToString(), userId);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
