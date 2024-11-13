@@ -9,11 +9,12 @@
     <h2>@ViewData["Title"]</h2>
 </div>
 <hr />
-
+@{decimal totalAmount = 0;}
 @foreach (var product in Model)
 {
-        <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
-            <div class="col-md-2 text-center">
+    totalAmount += product.Price * product.Quantity;
+    <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
+        <div class="col-md-2 text-center">
             @if (!string.IsNullOrEmpty(product.ImageUrl))
             {
                 <img src="@product.ImageUrl" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
@@ -22,19 +23,29 @@
             {
                 <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
             }
-            </div>
+        </div>
             <div class="col-md-4 text-start">
                 <h5 class="mb-0">@product.Name</h5>
             </div>
             <div class="col-md-2 text-start">
                 <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
             </div>
-            <div class="col-md-4 text-end">
+
+            <div class="col-md-2 text-start">
+                <label>Quantity: <div> @product.Quantity</div></label>
+            </div>
+
+            <div class="col-md-2 text-end">
                 <form asp-controller="Cart" asp-action="RemoveFromCart" method="post" style="display:inline;">
                     <input type="hidden" name="productId" value="@product.Id" />
                     <button type="submit" class="btn btn-danger">Remove from Cart</button>
                 </form>
             </div>
-
         </div>
+}
+@{
+    if (Model.Count != 0)
+    {
+        <label>Total amount of products is: @totalAmount</label>
+    }
 }

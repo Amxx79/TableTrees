@@ -28,12 +28,12 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(Guid id)
+        public IActionResult AddToCart(Guid id, int quantity)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             this.cartService
-                .AddProductAsync(id.ToString(), userId);
+                .AddProductAsync(id.ToString(), userId, quantity);
 
             return RedirectToAction(nameof(Index));
         }

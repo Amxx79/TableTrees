@@ -5,7 +5,7 @@ namespace TableTree.Services.Data.Interfaces
     {
         /*All, Add, Remove, Buy */
         Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync();
-        Task AddProductAsync(string productId, string userId);
+        Task AddProductAsync(string productId, string userId, int quantity);
         Task RemoveProduct(string productId, string userId);
 
 

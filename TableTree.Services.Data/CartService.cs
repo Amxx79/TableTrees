@@ -47,7 +47,7 @@ namespace TableTree.Services.Data
         //    }
         //}
 
-        public Task AddProductAsync(string productId, string userId)
+        public Task AddProductAsync(string productId, string userId, int quantity)
         {
             Guid productIdentificator = Guid.Parse(productId);
             Guid userIdentificator = Guid.Parse(userId);
@@ -65,6 +65,7 @@ namespace TableTree.Services.Data
                 {
                     ApplicationUserId = userIdentificator,
                     ProductId = productIdentificator,
+                    QuantityOfProducts = quantity,
                 };
 
                 productClientRepository.Add(newProductInCartOfClient);
@@ -97,6 +98,7 @@ namespace TableTree.Services.Data
                 .Select(pc => new ProductViewModel()
                 {
                     Id = pc.ProductId,
+                    Quantity = pc.QuantityOfProducts,
                     ImageUrl = pc.Product.ImageUrl,
                     Name = pc.Product.Name,
                     Price = pc.Product.Price,
