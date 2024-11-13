@@ -36,9 +36,11 @@ namespace TableTree.Web
                 .AddUserManager<UserManager<ApplicationUser>>();
 
             builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
-            builder.Services.AddScoped<IRepository<ProductClient>, Repository<ProductClient>>();
+            builder.Services.AddScoped<IRepository<ShoppingCart>, Repository<ShoppingCart>>();
+            builder.Services.AddScoped<IRepository<FavouriteProduct>, Repository<FavouriteProduct>>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddScoped<IFavouriteService, FavouriteService>();
 
             builder.Services.AddMvc();
 

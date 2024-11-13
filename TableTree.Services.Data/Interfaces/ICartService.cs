@@ -7,7 +7,5 @@ namespace TableTree.Services.Data.Interfaces
         Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync();
         Task AddProductAsync(string productId, string userId, int quantity);
         Task RemoveProduct(string productId, string userId);
-
-
     }
 }

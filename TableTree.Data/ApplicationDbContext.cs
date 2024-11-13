@@ -21,7 +21,8 @@ namespace TableTree.Data
         public DbSet<Product> Products {get; set;}
         public DbSet<Category> Categories {get; set; }
         public DbSet<TreeType> TypeOfTrees { get; set; }
-        public DbSet<ProductClient> ProductsClients { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<FavouriteProduct> FavouriteProducts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

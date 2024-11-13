@@ -26,6 +26,7 @@ namespace TableTree.Data.Models
         public virtual Category Category { get; set; } = null!;
         public Guid TreeTypeId { get; set; }
         public virtual TreeType TreeType { get; set; } = null!;
-        public IEnumerable<ProductClient> ProductsClients { get; set; } = new HashSet<ProductClient>();
+        public IEnumerable<ShoppingCart> ProductsClients { get; set; } = new HashSet<ShoppingCart>();
+        public IEnumerable<FavouriteProduct> FavouriteProductsClients { get; set; } = new HashSet<FavouriteProduct>();
     }
 }

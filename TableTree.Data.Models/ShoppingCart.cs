@@ -1,6 +1,6 @@
 ﻿namespace TableTree.Data.Models
 {
-    public class ProductClient
+    public class ShoppingCart
     {
         public int QuantityOfProducts { get; set; }
         public Guid ApplicationUserId { get; set; }

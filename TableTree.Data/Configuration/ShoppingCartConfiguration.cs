@@ -4,9 +4,9 @@ using TableTree.Data.Models;
 
 namespace TableTree.Data.Configuration
 {
-    public class ProductClientConfiguration : IEntityTypeConfiguration<ProductClient>
+    public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
     {
-        public void Configure(EntityTypeBuilder<ProductClient> builder)
+        public void Configure(EntityTypeBuilder<ShoppingCart> builder)
         {
             builder
                 .HasKey(pc => new { pc.ProductId, pc.ApplicationUserId });

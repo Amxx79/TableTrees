@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113150947_FavouriteProducts_Added")]
+    partial class FavouriteProducts_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,7 +267,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("FavouriteProducts");
+                    b.ToTable("FavouriteProduct");
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.Product", b =>
@@ -311,7 +314,7 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bf9cfccc-0061-4286-8887-0322762ad351"),
+                            Id = new Guid("4dcbf9dd-9ec7-4352-bfc4-3d0824de0a63"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                             ImageUrl = "https://i.etsystatic.com/21622583/r/il/745996/5104378769/il_794xN.5104378769_dck9.jpg",
@@ -322,7 +325,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("87d56e55-a204-4805-a5e1-4f2a26000900"),
+                            Id = new Guid("f1d46565-7b6d-46a2-8535-c236b1abd1ab"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
                             ImageUrl = "https://theindustrialfurniture.co.uk/cdn/shop/files/EkranResmi2023-04-3011.47-PhotoRoom_grande.png?v=1692620377",
@@ -333,7 +336,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4967f440-fae0-4651-9cc4-2ea712b97042"),
+                            Id = new Guid("87fa072f-1f7a-4a84-9dc0-75dd1b399e15"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
                             ImageUrl = "https://masivno.com/wp-content/uploads/2023/07/IMG_2392-1612x1655.jpeg",
@@ -359,7 +362,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ProductsClients");
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.TreeType", b =>

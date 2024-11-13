@@ -1,0 +1,30 @@
+﻿@using TableTree.Web.ViewModels.Favourite;
+@model List<ProductViewModel>
+
+<link rel="stylesheet" href="~/css/favourites.css" />
+
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<h2>My Favorite Products</h2>
+
+<div class="favorites-container">
+    @foreach (var product in Model)
+    {
+        <div class="favorite-item">
+            <div class="image-section">
+                <img src="@product.ImageUrl" alt="@product.Name" class="product-image" />
+            </div>
+            <div class="info-section">
+                <h3 class="product-name">@product.Name</h3>
+                <p class="product-type">@product.TreeType</p>
+                <p class="product-price">$@product.Price.ToString("0.00")</p>
+                <form asp-action="RemoveFromFavourites" method="post">
+                    <input type="hidden" name="id" value="@product.Id" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

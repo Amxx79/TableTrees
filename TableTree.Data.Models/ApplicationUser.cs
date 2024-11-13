@@ -8,6 +8,7 @@ namespace TableTree.Data.Models
         {
             this.Id = Guid.NewGuid();
         }
-        public IEnumerable<ProductClient> ClientsProducts { get; set; } = new HashSet<ProductClient>();
+        public IEnumerable<ShoppingCart> ClientsProducts { get; set; } = new HashSet<ShoppingCart>();
+        public IEnumerable<FavouriteProduct> ClientsFavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
     }
 }

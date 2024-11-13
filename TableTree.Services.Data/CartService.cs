@@ -8,10 +8,10 @@ namespace TableTree.Services.Data
 {
     public class CartService : ICartService
     {
-        private readonly IRepository<ProductClient> productClientRepository;
+        private readonly IRepository<ShoppingCart> productClientRepository;
         private readonly IRepository<Product> productRepository;
 
-        public CartService(IRepository<ProductClient> productClientRepository, IRepository<Product> productRepository)
+        public CartService(IRepository<ShoppingCart> productClientRepository, IRepository<Product> productRepository)
         {
             this.productClientRepository = productClientRepository;
             this.productRepository = productRepository;
@@ -55,13 +55,13 @@ namespace TableTree.Services.Data
             Product? product = this.productRepository
                 .GetById(productIdentificator);
 
-            ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
+            ShoppingCart? addedToCartAlready = this.productClientRepository.GetAll()
                 .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
                 pc.ApplicationUserId == userIdentificator);
 
             if (addedToCartAlready == null)
             {
-                ProductClient newProductInCartOfClient = new ProductClient()
+                ShoppingCart newProductInCartOfClient = new ShoppingCart()
                 {
                     ApplicationUserId = userIdentificator,
                     ProductId = productIdentificator,
@@ -79,7 +79,7 @@ namespace TableTree.Services.Data
             Guid productIdentificator = Guid.Parse(productId);
             Guid userIdentificator = Guid.Parse(userId);
 
-            ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
+            ShoppingCart? addedToCartAlready = this.productClientRepository.GetAll()
                 .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
                 pc.ApplicationUserId == userIdentificator);
 
