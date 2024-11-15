@@ -111,7 +111,12 @@ namespace TableTree.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProductToStore(AddProductToStoreViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
 
+            
 
             return this.RedirectToAction(nameof(Index));
         }

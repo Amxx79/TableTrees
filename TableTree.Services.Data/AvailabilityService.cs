@@ -63,6 +63,19 @@ namespace TableTree.Services.Data
 
         public Task AddProductToStoreAsync(AddProductToStoreViewModel model)
         {
+            var productGuid = Guid.Parse(model.Id);
+
+            ProductStore productStore = new ProductStore()
+            {
+                ProductId = productGuid,
+            };
+
+            foreach (var item in model.Locations)
+            {
+                var storeId = Guid.Parse(item.Id);
+
+                productStore.StoreId = storeId;
+            }
 
 
             throw new NotImplementedException();
