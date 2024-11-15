@@ -92,6 +92,14 @@ namespace TableTree.Web.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public IActionResult AddProductToStore(string id)
+        {
+
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TableTree.Web.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
@@ -25,15 +26,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">All Products</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Favourites" asp-action="Index">Favourites</a>
-                        </li>
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Favourites" asp-action="Index">Favourites</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -48,7 +52,16 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - TableTree.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @{string releaseDate = null;}
+            @if (DateTime.UtcNow.Year == 2024)
+            {
+                releaseDate = $"{DateTime.UtcNow.Year} - TableTree";
+            }
+            else
+            {
+                releaseDate = $"2024 - {DateTime.UtcNow.Year} - TableTree";
+            }
+            &copy; @releaseDate - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
