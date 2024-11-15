@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Store\**" />
+    <Content Remove="Views\Store\**" />
+    <EmbeddedResource Remove="Views\Store\**" />
+    <None Remove="Views\Store\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
@@ -26,10 +33,6 @@
     <ProjectReference Include="..\TableTree.Data\TableTree.Data.csproj" />
     <ProjectReference Include="..\TableTree.Services.Data\TableTree.Services.Data.csproj" />
     <ProjectReference Include="..\TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Store\" />
   </ItemGroup>
 
 </Project>

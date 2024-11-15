@@ -11,5 +11,6 @@ namespace TableTree.Web.ViewModels.Product
         public string? ImageUrl { get; set; }
         public Category Category { get; set; }
         public TreeType TreeType { get; set; }
+        public IEnumerable<ProductStore> ProductStores { get; set; } = new HashSet<ProductStore>();
     }
 }

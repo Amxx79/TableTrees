@@ -58,6 +58,7 @@ namespace TableTree.Web.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
             var guid = Guid.Parse(id);

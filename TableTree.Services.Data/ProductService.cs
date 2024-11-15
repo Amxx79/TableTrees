@@ -105,6 +105,8 @@ namespace TableTree.Services.Data
                 .GetAllAttached()
                 .Include(p => p.Category)
                 .Include(p => p.TreeType)
+                .Include(p => p.ProductStores)
+                .ThenInclude(ps => ps.Store)
                 .FirstOrDefault(p => p.Id == id);
 
             ProductDetailsViewModel model = new ProductDetailsViewModel()
@@ -115,7 +117,8 @@ namespace TableTree.Services.Data
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 Category = product.Category,
-                TreeType = product.TreeType
+                TreeType = product.TreeType,
+                ProductStores = product.ProductStores,
             };
 
             return model;
