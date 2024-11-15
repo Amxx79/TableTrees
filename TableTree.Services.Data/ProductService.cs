@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
@@ -105,7 +106,7 @@ namespace TableTree.Services.Data
                 .GetAllAttached()
                 .Include(p => p.Category)
                 .Include(p => p.TreeType)
-                .Include(p => p.ProductStores)
+                .Include(p => p.ProductStores.Where(ps => ps.IsDeleted == false))
                 .ThenInclude(ps => ps.Store)
                 .FirstOrDefault(p => p.Id == id);
 
