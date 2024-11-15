@@ -43,7 +43,8 @@ namespace TableTree.Services.Data
                         Id = s.Id.ToString(),
                         Location = s.Address,
                         IsSelected = s.StoreProducts
-                            .Any(cm => cm.Product.Id.ToString() == productId)
+                            .Any(cm => cm.Product.Id.ToString() == 
+                            productId && cm.IsDeleted == false)
                     })
                     .ToListAsync()
             };
@@ -97,13 +98,23 @@ namespace TableTree.Services.Data
                         await this.productStoreRepository
                             .SaveChangesAsync();
                     }
+
+                    else
+                    {
+                        productStore.IsDeleted = false;
+                        await this.productStoreRepository.SaveChangesAsync();
+                    }
+                }
+
+                else
+                {
+                    if (productStore != null)
+                    {
+                        productStore.IsDeleted = true;
+                        await this.productStoreRepository.SaveChangesAsync();
+                    }
                 }
             }
-        }
-
-        public Task RemoveProductFromStore(string productId, string userId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,5 @@ namespace TableTree.Services.Data.Interfaces
     {
         Task<AddProductToStoreViewModel> GetAddProductToStoreAsync(string productId, string storeId);
         Task AddProductToStoreAsync(AddProductToStoreViewModel model);
-        Task RemoveProductFromStore(string productId, string storeId);
     }
 }
