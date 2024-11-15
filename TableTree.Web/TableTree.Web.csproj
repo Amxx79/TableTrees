@@ -28,4 +28,8 @@
     <ProjectReference Include="..\TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Store\" />
+  </ItemGroup>
+
 </Project>

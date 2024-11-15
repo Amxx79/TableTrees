@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Product;
+using TableTree.Web.ViewModels.Store;
 
 namespace TableTree.Web.Controllers
 {
@@ -8,11 +10,14 @@ namespace TableTree.Web.Controllers
     {
         private readonly ILogger<ProductController> logger;
         private readonly IProductService productService;
+        private readonly IAvailabilityService availabilityService;
 
-        public ProductController(ILogger<ProductController> logger, IProductService productService)
+        public ProductController(ILogger<ProductController> logger, IProductService productService,
+            IAvailabilityService availabilityService)
         {
             this.logger = logger;
             this.productService = productService;
+            this.availabilityService = availabilityService;
         }
 
         [HttpGet]
@@ -93,13 +98,22 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddProductToStore(string id)
+        public async Task<IActionResult> AddProductToStore(string productId)
+        {
+            var userIdentiticator = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var model = await this.availabilityService
+                .GetAddProductToStoreAsync(productId.ToString(), userIdentiticator);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProductToStore(AddProductToStoreViewModel model)
         {
 
 
             return this.RedirectToAction(nameof(Index));
         }
-
-
     }
 }

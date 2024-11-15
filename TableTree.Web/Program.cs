@@ -38,6 +38,9 @@ namespace TableTree.Web
             builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
             builder.Services.AddScoped<IRepository<ShoppingCart>, Repository<ShoppingCart>>();
             builder.Services.AddScoped<IRepository<FavouriteProduct>, Repository<FavouriteProduct>>();
+            builder.Services.AddScoped<IRepository<ProductStore>, Repository<ProductStore>>();
+            builder.Services.AddScoped<IRepository<Store>, Repository<Store>>();
+            builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICartService, CartService>();
             builder.Services.AddScoped<IFavouriteService, FavouriteService>();

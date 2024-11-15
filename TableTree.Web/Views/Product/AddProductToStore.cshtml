@@ -1,0 +1,40 @@
+﻿@using TableTree.Web.ViewModels.Product;
+@model AddProductToStoreViewModel
+
+<div class="container mt-4">
+    <h2>Set Availability for @Model.ProductName</h2>
+    <form asp-action="AddProductToStore" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="@Model.ProductName" />
+@* 
+        <div class="form-group">
+            <label>Available Locations:</label>
+            <div>
+                @foreach (var location in Model.Locations)
+                {
+                    <div class="form-check">
+                        <input type="hidden" asp-for="@location.Id" />
+                            <input type="hidden" asp-for="@location.Location" />
+                        <input type="checkbox" class="form-check-input" asp-for="@location.IsSelected" value="@location.Id" 
+                            id="@location.Id" />
+                        <label class="form-check-label" for="@location.Id">@location.Location</label>
+                    </div>
+                }
+            </div>
+        </div> *@
+            <div class="form-group">
+            @for (var i = 0; i < Model.Locations.Count(); i++)
+            {
+                <div class="form-check">
+
+                        <input type="hidden" asp-for="@Model.Locations[i].Id" />
+                        <input type="hidden" asp-for="@Model.Locations[i].Location" />
+                        <input type="checkbox" asp-for="@Model.Locations[i].IsSelected" class="form-check-input" />
+                                <label class="form-check-label">@Model.Locations[i].Location</label>
+                </div>
+            }
+    </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Save Availability</button>
+    </form>
+</div>
