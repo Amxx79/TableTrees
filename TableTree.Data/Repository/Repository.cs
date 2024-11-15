@@ -54,6 +54,18 @@ namespace TableTree.Data.Repository
             await dbContext.SaveChangesAsync();
         }
 
+        public void AddRangeFromList(List<TType> items)
+        {
+            dbSet.AddRange();
+            dbContext.SaveChanges();
+        }
+
+        public async Task AddRangeAsyncFromList(List<TType> items)
+        {
+            await dbSet.AddRangeAsync();
+            await dbContext.SaveChangesAsync();
+        }
+
         public bool Delete(TType item)
         {
             dbSet.Remove(item);

@@ -49,36 +49,56 @@ namespace TableTree.Services.Data
             };
 
             return model;
-
-
-            //ProductStore? productStore = new ProductStore()
-            //{
-            //    ProductId = productIdentificator,
-            //    StoreId = storeIdentificator,
-            //};
-
-            //await this.repository
-            //    .AddAsync(productStore);
         }
 
-        public Task AddProductToStoreAsync(AddProductToStoreViewModel model)
+        public async Task AddProductToStoreAsync(AddProductToStoreViewModel model)
         {
             var productGuid = Guid.Parse(model.Id);
 
-            ProductStore productStore = new ProductStore()
+            Product? productToAdd = await this.productRepository
+                .GetByIdAsync(productGuid);
+
+            if (productToAdd == null)
             {
-                ProductId = productGuid,
-            };
+                return;
+            }
 
             foreach (var item in model.Locations)
             {
                 var storeId = Guid.Parse(item.Id);
 
-                productStore.StoreId = storeId;
+                Store? store = await this.storeRepository
+                    .GetByIdAsync(storeId);
+
+                if (store == null)
+                {
+                    return;
+                }
+
+                ProductStore? productStore = this.productStoreRepository
+                    .GetAllAttached()
+                    .FirstOrDefault(ps => ps.Store.Id == storeId && ps.ProductId == productToAdd.Id);
+
+
+                if (item.IsSelected)
+                {
+                    if (productStore == null) 
+                    {
+                        ProductStore newProductStore = new ProductStore()
+                        {
+                            StoreId = storeId,
+                            Store = store,
+                            ProductId = productToAdd.Id,
+                            Product = productToAdd,
+                        };
+
+                        await this.productStoreRepository
+                            .AddAsync(newProductStore);
+                        await this.productStoreRepository
+                            .SaveChangesAsync();
+                    }
+                }
             }
-
-
-            throw new NotImplementedException();
         }
 
         public Task RemoveProductFromStore(string productId, string userId)

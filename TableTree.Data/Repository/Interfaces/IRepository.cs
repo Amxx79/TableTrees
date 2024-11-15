@@ -19,7 +19,9 @@ namespace TableTree.Data.Repository.Interfaces
         bool Add(TType item);
         Task<bool> AddAsync(TType item);
         void AddRange(TType[] items);
+        void AddRangeFromList(List<TType> items);
         void AddRangeAsync(TType[] items);
+        Task AddRangeAsyncFromList(List<TType> items);
 
         //Update methods
         bool Update(TType item);

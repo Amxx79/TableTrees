@@ -23,7 +23,7 @@ namespace TableTree.Data
         public DbSet<TreeType> TypeOfTrees { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<FavouriteProduct> FavouriteProducts { get; set; }
-        public DbSet<ProductStore> Availability {  get; set; }
+        public DbSet<ProductStore> Availability { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

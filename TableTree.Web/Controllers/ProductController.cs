@@ -116,8 +116,10 @@ namespace TableTree.Web.Controllers
                 return this.View(model);
             }
 
-            
+            await this.availabilityService
+                .AddProductToStoreAsync(model);
 
+            //TODO: Check what have to do when the data is ready.
             return this.RedirectToAction(nameof(Index));
         }
     }
