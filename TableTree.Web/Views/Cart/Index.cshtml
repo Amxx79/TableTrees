@@ -24,13 +24,21 @@
                 <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
             }
         </div>
-            <div class="col-md-4 text-start">
+            <div class="col-md-2 text-start">
                 <h5 class="mb-0">@product.Name</h5>
             </div>
             <div class="col-md-2 text-start">
                 <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
             </div>
 
+             <div class="col-2">
+                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                    <input style="width:2.5em" type="number" name="quantity" id="quantity" size="4" max="9999"
+                           min="1" value="1" step="1"></input>
+                    <input type="hidden" name="id" value="@product.Id" />
+                    <button type="submit" class="btn btn-sm mb-2 w-50 fw-bold rounded btn-primary">Update</button>
+                </form>
+            </div>
             <div class="col-md-2 text-start">
                 <label>Quantity: <div> @product.Quantity</div></label>
             </div>

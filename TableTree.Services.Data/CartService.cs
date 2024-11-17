@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
@@ -17,37 +18,7 @@ namespace TableTree.Services.Data
             this.productRepository = productRepository;
         }
 
-        //public async Task AddProductAsync(string productId, string userId)
-        //{
-        //    Guid productIdentificator = Guid.Parse(productId);
-        //    Guid userIdentificator = Guid.Parse(userId);
-
-        //    Product? product = this.productRepository
-        //        .GetById(productIdentificator);
-
-        //    if (product == null)
-        //    {
-        //        return;
-        //    }
-
-        //    ProductClient? addedToCartAlready = this.productClientRepository.GetAll()
-        //        .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
-        //        pc.ApplicationUserId == userIdentificator);
-
-        //    if (addedToCartAlready == null)
-        //    {
-        //        ProductClient newProductInCartOfClient = new ProductClient()
-        //        {
-        //            ApplicationUserId = userIdentificator,
-        //            ProductId = productIdentificator,
-        //        };
-
-        //        await productClientRepository.AddAsync(newProductInCartOfClient);
-        //        await productClientRepository.SaveChangesAsync();
-        //    }
-        //}
-
-        public Task AddProductAsync(string productId, string userId, int quantity)
+        public async Task AddProductAsync(string productId, string userId, int quantity)
         {
             Guid productIdentificator = Guid.Parse(productId);
             Guid userIdentificator = Guid.Parse(userId);
@@ -55,9 +26,19 @@ namespace TableTree.Services.Data
             Product? product = this.productRepository
                 .GetById(productIdentificator);
 
-            ShoppingCart? addedToCartAlready = this.productClientRepository.GetAll()
+            ShoppingCart? addedToCartAlready = this.productClientRepository
+                .GetAllAttached()
                 .FirstOrDefault(pc => pc.ProductId == productIdentificator &&
                 pc.ApplicationUserId == userIdentificator);
+
+            if (addedToCartAlready != null && addedToCartAlready.QuantityOfProducts != quantity)
+            {
+                addedToCartAlready.QuantityOfProducts = quantity;
+                await productClientRepository.UpdateAsync(addedToCartAlready);
+                return;
+                //await RemoveProduct(addedToCartAlready.Product.Id.ToString(), addedToCartAlready.ApplicationUser.Id.ToString());
+                //await AddProductAsync(productId, userId, quantity);
+            }
 
             if (addedToCartAlready == null)
             {
@@ -68,10 +49,10 @@ namespace TableTree.Services.Data
                     QuantityOfProducts = quantity,
                 };
 
-                productClientRepository.Add(newProductInCartOfClient);
-                productClientRepository.SaveChanges();
+                await productClientRepository.AddAsync(newProductInCartOfClient);
+                await productClientRepository.SaveChangesAsync();
             }
-                return Task.CompletedTask;
+                return;
         }
 
         public async Task RemoveProduct(string productId, string userId)
