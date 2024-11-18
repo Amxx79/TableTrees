@@ -1,11 +1,4 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using TableTree.Data;
-using TableTree.Data.Models;
-using TableTree.Data.Repository;
-using TableTree.Data.Repository.Interfaces;
-using TableTree.Services.Data;
-using TableTree.Services.Data.Interfaces;
+using Microsot.Extensions.DependencyInjection;
 
 namespace TableTree.Web
 {
@@ -16,39 +9,18 @@ namespace TableTree.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            builder.Services.AddApplicationDatabase(builder.Configuration);
 
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddApplicationIdentity(builder.Configuration);
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services
-                .AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
-                {
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddRoles<IdentityRole<Guid>>()
-                .AddSignInManager<SignInManager<ApplicationUser>>()
-                .AddUserManager<UserManager<ApplicationUser>>();
-
-            builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
-            builder.Services.AddScoped<IRepository<ShoppingCart>, Repository<ShoppingCart>>();
-            builder.Services.AddScoped<IRepository<FavouriteProduct>, Repository<FavouriteProduct>>();
-            builder.Services.AddScoped<IRepository<ProductStore>, Repository<ProductStore>>();
-            builder.Services.AddScoped<IRepository<Store>, Repository<Store>>();
-            builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<ICartService, CartService>();
-            builder.Services.AddScoped<IFavouriteService, FavouriteService>();
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             builder.Services.AddMvc();
 
             builder.Services.AddControllersWithViews();
-
 
             var app = builder.Build();
 

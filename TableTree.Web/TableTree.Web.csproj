@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-TableTree.Web-3797af56-77e3-4e69-ae42-3b1f3eb539aa</UserSecretsId>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
     <ProjectReference Include="..\TableTree.Data.Models\TableTree.Data.Models.csproj" />
     <ProjectReference Include="..\TableTree.Data\TableTree.Data.csproj" />
     <ProjectReference Include="..\TableTree.Services.Data\TableTree.Services.Data.csproj" />
+    <ProjectReference Include="..\TableTree.Web.Infrastructure\TableTree.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj" />
   </ItemGroup>
 

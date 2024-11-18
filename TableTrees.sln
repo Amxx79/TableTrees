@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableTree.Common", "TableTr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A3B8C602-A8CC-4D6C-8A58-AFB16DE0CFFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableTree.Services.Data", "TableTree.Services.Data\TableTree.Services.Data.csproj", "{687A8A71-3BB0-4EC3-91F8-638A60038EE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableTree.Services.Data", "TableTree.Services.Data\TableTree.Services.Data.csproj", "{687A8A71-3BB0-4EC3-91F8-638A60038EE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableTree.Web.ViewModels", "TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj", "{77175EB8-9070-424B-8ACB-3A5DA0224EC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableTree.Web.ViewModels", "TableTree.Web.ViewModels\TableTree.Web.ViewModels.csproj", "{77175EB8-9070-424B-8ACB-3A5DA0224EC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableTree.Web.Infrastructure", "TableTree.Web.Infrastructure\TableTree.Web.Infrastructure.csproj", "{5FB1614B-889C-49AF-973C-C9D15C75B8FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{77175EB8-9070-424B-8ACB-3A5DA0224EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77175EB8-9070-424B-8ACB-3A5DA0224EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77175EB8-9070-424B-8ACB-3A5DA0224EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB1614B-889C-49AF-973C-C9D15C75B8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB1614B-889C-49AF-973C-C9D15C75B8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB1614B-889C-49AF-973C-C9D15C75B8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB1614B-889C-49AF-973C-C9D15C75B8FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{E5A019DD-8571-4119-9938-C195A595D979} = {61CE23AC-8ECA-4CFC-8909-AB493F138FC3}
 		{687A8A71-3BB0-4EC3-91F8-638A60038EE7} = {A3B8C602-A8CC-4D6C-8A58-AFB16DE0CFFE}
 		{77175EB8-9070-424B-8ACB-3A5DA0224EC8} = {2B0B702F-A6F7-4CA6-AA1F-62F47E9209E3}
+		{5FB1614B-889C-49AF-973C-C9D15C75B8FA} = {2B0B702F-A6F7-4CA6-AA1F-62F47E9209E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {434DF2B0-71A9-48B3-B990-F86B29557074}
