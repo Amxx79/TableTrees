@@ -232,7 +232,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -264,7 +264,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("FavouriteProducts");
+                    b.ToTable("FavouriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.Product", b =>
@@ -306,7 +306,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("TreeTypeId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -381,7 +381,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Availability");
+                    b.ToTable("Availability", (string)null);
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.ShoppingCart", b =>
@@ -399,7 +399,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.Store", b =>
@@ -414,7 +414,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Store");
+                    b.ToTable("Store", (string)null);
 
                     b.HasData(
                         new
@@ -447,7 +447,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeOfTrees");
+                    b.ToTable("TypeOfTrees", (string)null);
 
                     b.HasData(
                         new

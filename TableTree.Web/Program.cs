@@ -21,6 +21,7 @@ namespace TableTree.Web
             builder.Services.AddMvc();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 

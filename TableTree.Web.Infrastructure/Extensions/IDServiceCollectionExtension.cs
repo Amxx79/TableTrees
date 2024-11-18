@@ -25,7 +25,7 @@ namespace Microsot.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
             services
-                .AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
+                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
@@ -33,7 +33,7 @@ namespace Microsot.Extensions.DependencyInjection
 
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddRoles<IdentityRole<Guid>>()
+                .AddRoles<ApplicationRole>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddUserManager<UserManager<ApplicationUser>>();
 

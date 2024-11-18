@@ -70,18 +70,21 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-6 px-1">
-                        <form asp-controller="Product" asp-action="AddProductToStore" method="get">
-                            <input type="hidden" name="productId" value="@product.Id" asp-for="@product.Id"
-                                    asp-controller="Product" asp-action="AddProductToStore" asp-route-id="@product.Id"/>
-                            <button class="btn btn-sm mb-2 w-100 fw-bold rounded btn-danger">Add To Store</button>
-                        </form>
-                    </div>
-                    <div class="col-6 px-1">
-                        <input type="hidden" asp-for="@product.Id" />
-                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
-                           class="btn btn-sm mb-2 w-100 fw-bold rounded btn-danger">Delete</a>
-                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="col-6 px-1">
+                            <form asp-controller="Product" asp-action="AddProductToStore" method="get">
+                                <input type="hidden" name="productId" value="@product.Id" asp-for="@product.Id"
+                                       asp-controller="Product" asp-action="AddProductToStore" asp-route-id="@product.Id" />
+                                <button class="btn btn-sm mb-2 w-100 fw-bold rounded btn-danger">Add To Store</button>
+                            </form>
+                        </div>
+                        <div class="col-6 px-1">
+                            <input type="hidden" asp-for="@product.Id" />
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                               class="btn btn-sm mb-2 w-100 fw-bold rounded btn-danger">Delete</a>
+                        </div>
+                    }
                 </div>
             }
             else

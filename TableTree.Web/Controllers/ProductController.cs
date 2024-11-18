@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TableTree.Services.Data.Interfaces;
@@ -50,6 +51,7 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             var guid = Guid.Parse(id);
@@ -68,6 +70,7 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id)
         {
             var guid = Guid.Parse(id);
@@ -82,6 +85,7 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(EditProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -99,6 +103,7 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductToStore(string productId)
         {
             var userIdentiticator = User.FindFirstValue(ClaimTypes.NameIdentifier);
