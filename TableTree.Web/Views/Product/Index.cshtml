@@ -58,7 +58,7 @@
                 <div class="row gx-0">
                     <div class="col-6 px-1">
                         <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                            class="btn btn-secondary btn-sm mb-2 w-100 fw-bold rounded btn-dark-text">Details</a>
+                           class="btn btn-warning btn-sm mb-2 w-100 fw-bold rounded btn-dark-text">Details</a>
                     </div>
                     <div class="col-6 px-1">
                         <div class="col-12">
@@ -66,7 +66,7 @@
                                 <input style="width:2.5em" type="number" name="quantity" id="quantity" size="4" max="9999"
                                     min="1" value="1" step="1"></input>
                                 <input type="hidden" name="id" value="@product.Id" />
-                                <button type="submit" class="btn bg-dark btn-sm mb-2 w-50 fw-bold rounded btn-primary">Buy</button>
+                                <button type="submit" class="btn bg-dark btn-sm mb-2 w-50 fw-bold rounded btn-secondary">Buy</button>
                             </form>
                         </div>
                     </div>

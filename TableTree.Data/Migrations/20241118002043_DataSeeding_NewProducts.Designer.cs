@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241118002043_DataSeeding_NewProducts")]
+    partial class DataSeeding_NewProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,43 +314,21 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("62d480d5-1459-453b-84e5-e54e36ed16a1"),
-                            CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
-                            Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
-                            ImageUrl = "/images/table-1.jpeg",
-                            IsDeleted = false,
-                            Name = "Reclaimed Wood Counter Top",
-                            Price = 450.00m,
-                            TreeTypeId = new Guid("401dd5cd-c271-4960-84ce-0b364c96f039")
-                        },
-                        new
-                        {
-                            Id = new Guid("f862983c-0b3c-421e-95dc-5397320ddd2a"),
+                            Id = new Guid("372e5ce5-0a53-4dff-8772-a031d57b62a3"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
-                            Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
-                            ImageUrl = "/images/table-2.jpeg",
+                            Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
+                            ImageUrl = "https://i.etsystatic.com/21622583/r/il/745996/5104378769/il_794xN.5104378769_dck9.jpg",
                             IsDeleted = false,
-                            Name = "Eris Hackberry Blue Epoxy Resin Table",
-                            Price = 4800.00m,
-                            TreeTypeId = new Guid("133a6af3-1b7d-4d6e-aa41-33be63184766")
+                            Name = "Rustic Live Edge Tree Table",
+                            Price = 799.99m,
+                            TreeTypeId = new Guid("632bfa2f-aa06-4c1b-913d-33ef43a44d34")
                         },
                         new
                         {
-                            Id = new Guid("0ac3d9b1-3177-4b2e-bb27-11791c1436a1"),
-                            CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
-                            Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
-                            ImageUrl = "/images/table-3.jpg",
-                            IsDeleted = false,
-                            Name = "Epoxy resin table olive tree",
-                            Price = 1200.00m,
-                            TreeTypeId = new Guid("401dd5cd-c271-4960-84ce-0b364c96f039")
-                        },
-                        new
-                        {
-                            Id = new Guid("25d008be-1555-433e-a146-a72b85ae07ec"),
+                            Id = new Guid("900b047a-f95e-4a4a-9bba-bf7a4dfe5f6f"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
-                            ImageUrl = "/images/table-4.jpeg",
+                            ImageUrl = "https://theindustrialfurniture.co.uk/cdn/shop/files/EkranResmi2023-04-3011.47-PhotoRoom_grande.png?v=1692620377",
                             IsDeleted = false,
                             Name = "Epoxy Resin River Table",
                             Price = 1199.50m,
@@ -355,14 +336,36 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a9c418bc-f195-4398-b9e5-ef1c23072654"),
-                            CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
-                            Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
-                            ImageUrl = "/images/table-5.jpg",
+                            Id = new Guid("7d16de69-c765-40d5-8a91-777b7526af6d"),
+                            CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
+                            Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
+                            ImageUrl = "https://masivno.com/wp-content/uploads/2023/07/IMG_2392-1612x1655.jpeg",
                             IsDeleted = false,
-                            Name = "Rustic Live Edge Tree Table",
-                            Price = 799.99m,
-                            TreeTypeId = new Guid("632bfa2f-aa06-4c1b-913d-33ef43a44d34")
+                            Name = "Reclaimed Wood Counter Top",
+                            Price = 450.00m,
+                            TreeTypeId = new Guid("401dd5cd-c271-4960-84ce-0b364c96f039")
+                        },
+                        new
+                        {
+                            Id = new Guid("60e6bf1c-b320-4274-8fab-c0a35665e9d9"),
+                            CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
+                            Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
+                            ImageUrl = "/images/table-1.jpg",
+                            IsDeleted = false,
+                            Name = "Epoxy resin table olive tree",
+                            Price = 1200.00m,
+                            TreeTypeId = new Guid("401dd5cd-c271-4960-84ce-0b364c96f039")
+                        },
+                        new
+                        {
+                            Id = new Guid("5946e557-d2a0-43cd-b673-e26453a2b985"),
+                            CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
+                            Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
+                            ImageUrl = "/images/table-2.jpeg",
+                            IsDeleted = false,
+                            Name = "Eris Hackberry Blue Epoxy Resin Table",
+                            Price = 4800.00m,
+                            TreeTypeId = new Guid("133a6af3-1b7d-4d6e-aa41-33be63184766")
                         });
                 });
 
