@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Security.Principal;
 using TableTree.Data;
 using TableTree.Data.Models;
 using TableTree.Data.Repository;
@@ -52,6 +55,7 @@ namespace Microsot.Extensions.DependencyInjection
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             return services;
         }

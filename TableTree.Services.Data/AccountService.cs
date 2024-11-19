@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using System.Security.Principal;
 using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
@@ -9,17 +10,14 @@ namespace TableTree.Services.Data
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
-        private readonly IPrincipal currentUser;
 
-
-        public AccountService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IPrincipal user)
+        public AccountService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.currentUser = user;
         }
 
-        public async Task MakeUserAdmin()
+        public async Task MakeUserAdmin(ClaimsPrincipal user)
         {
             string role = "Admin";
             IdentityResult? result = null;
@@ -29,20 +27,20 @@ namespace TableTree.Services.Data
                 result = await roleManager.CreateAsync(new ApplicationRole(role));
             }
 
-            if (currentUser.IsInRole(role) == false && (result == null || result.Succeeded))
+            if (user.IsInRole(role) == false && (result == null || result.Succeeded))
             {
-                var user = await userManager.FindByNameAsync(currentUser.Identity.Name);
+                var currentUser = await userManager.FindByNameAsync(user.Identity.Name);
 
-                if (user != null)
+                if (currentUser != null)
                 {
-                    await userManager.AddToRoleAsync(user, role);
+                    await userManager.AddToRoleAsync(currentUser, role);
                 }
             }
 
             return;
         }
 
-        public async Task MakeUserGlobalAdmin()
+        public async Task MakeUserGlobalAdmin(ClaimsPrincipal user)
         {
             string role = "GlobalAdmin";
 
@@ -53,13 +51,13 @@ namespace TableTree.Services.Data
                 result = await roleManager.CreateAsync(new ApplicationRole(role));
             }
 
-            if (currentUser.IsInRole(role) == false && (result == null || result.Succeeded))
+            if (user.IsInRole(role) == false && (result == null || result.Succeeded))
             {
-                var user = await userManager.FindByNameAsync(currentUser.Identity.Name);
+                var currentUser = await userManager.FindByNameAsync(user.Identity.Name);
 
                 if (user != null)
                 {
-                    await userManager.AddToRoleAsync(user, role);
+                    await userManager.AddToRoleAsync(currentUser, role);
                 }
             }
 

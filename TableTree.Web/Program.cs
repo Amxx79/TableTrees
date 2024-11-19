@@ -13,10 +13,10 @@ namespace TableTree.Web
 
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddApplicationIdentity(builder.Configuration);
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddApplicationServices(builder.Configuration);
 
             builder.Services.AddMvc();
 

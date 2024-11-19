@@ -21,10 +21,13 @@ namespace TableTree.Web.Controllers
             this.accountService = accountService;
         }
 
+
         [Authorize]
         public async Task<IActionResult> MakeUserAdmin()
         {
-            await this.accountService.MakeUserAdmin();
+            var user = User;
+
+            await this.accountService.MakeUserAdmin(user);
 
             return RedirectToAction(nameof(Index), "Product");
         }
@@ -32,7 +35,9 @@ namespace TableTree.Web.Controllers
         [Authorize]
         public async Task<IActionResult> MakeUserGlobalAdmin()
         {
-            await this.accountService.MakeUserGlobalAdmin();
+            var user = User;
+
+            await this.accountService.MakeUserGlobalAdmin(user);
 
             return RedirectToAction(nameof(Index), "Product");
         }
