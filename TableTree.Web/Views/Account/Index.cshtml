@@ -18,7 +18,7 @@
                     <td>@user.Username</td>
                     <td>@user.IsAdmin</td>
                     <td>
-                        <form asp-action="ToggleAdmin" method="post">
+                        <form asp-action="MakeUserAdmin" method="post">
                             <input type="hidden" name="userId" value="@user.Id" />
                             <button type="submit" class="btn btn-@(user.IsAdmin ? "danger" : "success")">
                             @(user.IsAdmin ? "Remove Admin" : "Make Admin")

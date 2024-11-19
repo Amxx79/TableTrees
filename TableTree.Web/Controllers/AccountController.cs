@@ -32,11 +32,13 @@ namespace TableTree.Web.Controllers
             {
                 var roles = await userManager.GetRolesAsync(user);
 
+                var isInRole = await userManager.IsInRoleAsync(user, "Admin");
+
                 UserRoleViewModel userRole = new UserRoleViewModel()
                 {
                     Id = user.Id.ToString(),
                     Username = user.UserName,
-                    IsAdmin = roles.Contains("Admin") ? true : false,
+                    IsAdmin = isInRole,
                 };
 
                 model.Add(userRole);

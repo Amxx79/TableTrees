@@ -37,6 +37,13 @@ namespace TableTree.Services.Data
                 }
             }
 
+            else if (user.IsInRole("Admin"))
+            {
+                var currentUser = await userManager.FindByNameAsync(user.Identity.Name);
+
+                await userManager.RemoveFromRoleAsync(currentUser, role);
+            }
+
             return;
         }
 
