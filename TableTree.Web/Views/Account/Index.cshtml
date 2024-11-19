@@ -1,0 +1,31 @@
+﻿@using TableTree.Web.ViewModels.Account;
+@model List<UserRoleViewModel>
+
+<h2>Manage User Roles</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Is Admin</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.IsAdmin</td>
+                    <td>
+                        <form asp-action="ToggleAdmin" method="post">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-@(user.IsAdmin ? "danger" : "success")">
+                            @(user.IsAdmin ? "Remove Admin" : "Make Admin")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
