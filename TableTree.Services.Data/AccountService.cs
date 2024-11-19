@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
+using TableTree.Web.ViewModels.Account;
 
 namespace TableTree.Services.Data
 {
@@ -15,6 +16,29 @@ namespace TableTree.Services.Data
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+        }
+
+        public async Task<List<UserRoleViewModel>> GetlAllUsers()
+        {
+            List<UserRoleViewModel> model = new List<UserRoleViewModel>();
+
+            foreach (var user in userManager.Users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+
+                var isInRole = await userManager.IsInRoleAsync(user, "Admin");
+
+                UserRoleViewModel userRole = new UserRoleViewModel()
+                {
+                    Id = user.Id.ToString(),
+                    Username = user.UserName,
+                    IsAdmin = isInRole,
+                };
+
+                model.Add(userRole);
+            }
+
+            return model;
         }
 
         public async Task MakeUserAdmin(ClaimsPrincipal user)

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
 using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
-using TableTree.Web.ViewModels.Account;
 
 namespace TableTree.Web.Controllers
 {
@@ -23,26 +20,10 @@ namespace TableTree.Web.Controllers
             this.accountService = accountService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            List<UserRoleViewModel> model = new List<UserRoleViewModel>();
-
-
-            foreach (var user in userManager.Users)
-            {
-                var roles = await userManager.GetRolesAsync(user);
-
-                var isInRole = await userManager.IsInRoleAsync(user, "Admin");
-
-                UserRoleViewModel userRole = new UserRoleViewModel()
-                {
-                    Id = user.Id.ToString(),
-                    Username = user.UserName,
-                    IsAdmin = isInRole,
-                };
-
-                model.Add(userRole);
-            }
+            var model = await this.accountService.GetlAllUsers();
 
             return this.View(model);
         }

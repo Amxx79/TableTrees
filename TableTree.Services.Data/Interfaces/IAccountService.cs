@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using TableTree.Web.ViewModels.Account;
 
 namespace TableTree.Services.Data.Interfaces
 {
@@ -12,5 +7,6 @@ namespace TableTree.Services.Data.Interfaces
     {
         Task MakeUserAdmin(ClaimsPrincipal user);
         Task MakeUserGlobalAdmin(ClaimsPrincipal user);
+        Task<List<UserRoleViewModel>> GetlAllUsers();
     }
 }
