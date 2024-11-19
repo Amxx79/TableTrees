@@ -51,6 +51,7 @@ namespace Microsot.Extensions.DependencyInjection
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IFavouriteService, FavouriteService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             return services;
         }
