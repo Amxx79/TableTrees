@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120225324_SequenceNumber_OnOrder_Added")]
+    partial class SequenceNumber_OnOrder_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,14 +279,8 @@ namespace TableTree.Data.Migrations
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("SequenceNumber")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -341,7 +338,7 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a1995219-4a4b-423a-b79a-c63d86c76642"),
+                            Id = new Guid("7195396d-120d-4146-9d36-efe7285cc919"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
                             ImageUrl = "/images/table-1.jpeg",
@@ -352,7 +349,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a27b9c43-f0b8-4423-8f52-d46b8f7e1fb6"),
+                            Id = new Guid("775c2b41-48be-49b5-b9ae-99ce3d6a4a1e"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-2.jpeg",
@@ -363,7 +360,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("485f4682-fbc8-4eae-916e-3780f82400c8"),
+                            Id = new Guid("5ddd4423-e07b-4e7a-a30a-a27bc8b347aa"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-3.jpg",
@@ -374,7 +371,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e099d1d5-56f3-4812-990f-831730848dc9"),
+                            Id = new Guid("b88d9100-5f29-4df0-9a84-17fcc9705c00"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
                             ImageUrl = "/images/table-4.jpeg",
@@ -385,7 +382,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bb93b61a-0562-4a0d-bbda-560d12110a3b"),
+                            Id = new Guid("9161788f-7154-4595-8cd6-786c1ace90b5"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                             ImageUrl = "/images/table-5.jpg",
