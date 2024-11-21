@@ -1,0 +1,42 @@
+﻿@using TableTree.Web.ViewModels.Order
+@model IEnumerable<OrderViewModel>
+
+@{
+    ViewData["Title"] = "User Orders";
+}
+
+<h1>User Orders</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Order Date</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.SequenceNumber</td>
+                    <td>@order.OrderDate</td>
+                    <td>@order.TotalPrice</td>
+                    <td>
+                        <form asp-action="Details" asp-controller="Orders" method="get">
+                            <input type="hidden" name="id" value="@order.OrderId" />
+                            <button type="submit" class="btn btn-primary">Details</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No orders found for this user.</p>
+}

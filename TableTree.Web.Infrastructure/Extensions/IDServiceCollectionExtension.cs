@@ -50,12 +50,14 @@ namespace Microsot.Extensions.DependencyInjection
             services.AddScoped<IRepository<FavouriteProduct>, Repository<FavouriteProduct>>();
             services.AddScoped<IRepository<ProductStore>, Repository<ProductStore>>();
             services.AddScoped<IRepository<Store>, Repository<Store>>();
+            services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IAvailabilityService, AvailabilityService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IAccountService, AccountService>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IOrderService, OrderService>();
 
             return services;
         }
