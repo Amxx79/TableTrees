@@ -27,21 +27,21 @@ namespace TableTree.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToOrders(IEnumerable<ViewModels.Order.ProductViewModel> products)
         {
-            var orders = await this.orderService
-                .GetAllOrders();
+            int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
 
             OrderViewModel orderr = new OrderViewModel()
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 OrderDate = DateTime.Now.ToString(),
-                OrderId = orders.Last().SequenceNumber.ToString() + 1,
+                SequenceNumber = highestOrderSequenceNumber + 1,
+                TotalPrice = products.Sum(p => p.Price * p.Quantity).ToString(),
                 Products = products,
             };
 
             await this.orderService
                 .AddToOrders(orderr);
 
-            return default;
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }

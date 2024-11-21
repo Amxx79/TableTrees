@@ -2,7 +2,6 @@
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
-using TableTree.Web.ViewModels.Cart;
 using TableTree.Web.ViewModels.Order;
 
 namespace TableTree.Services.Data
@@ -29,6 +28,7 @@ namespace TableTree.Services.Data
 
             Order newOrder = new Order()
             {
+                SequenceNumber = order.SequenceNumber,
                 ApplicationUserId = Guid.Parse(order.UserId),
                 TotalPrice = Decimal.Parse(order.TotalPrice),
                 OrderDate = DateTime.Parse(order.OrderDate),
@@ -55,6 +55,17 @@ namespace TableTree.Services.Data
                 });
 
             return orders;
+        }
+
+        public int GetLatestSequenceNumberAsync()
+        {
+            // Get the highest sequence number from the orders table
+            var latestOrder = this.orderRepository
+                .GetAll() // Assuming GetAll() returns IQueryable<Order>
+                .OrderByDescending(o => o.SequenceNumber)
+                .FirstOrDefault();
+
+            return latestOrder?.SequenceNumber ?? 0; // Return 0 if there are no orders
         }
     }
 }

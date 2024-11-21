@@ -1,4 +1,4 @@
-﻿@using TableTree.Web.ViewModels.Cart;
+﻿@using TableTree.Web.ViewModels.Cart
 @model List<ProductViewModel>
 
 @{
@@ -11,53 +11,62 @@
 </div>
 <hr />
 
-<form asp-controller="Order" asp-action="AddToOrders" method="post">
-    @foreach (var product in Model)
-    {
-        totalAmount += product.Price * product.Quantity;
-            <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
-                <div class="col-md-2 text-center">
-                @if (!string.IsNullOrEmpty(product.ImageUrl))
-                {
-                            <img src="@product.ImageUrl" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
-                }
-                else
-                {
-                            <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
-                }
-                </div>
-                <div class="col-md-2 text-start">
-                    <h5 class="mb-0">@product.Name</h5>
-                </div>
-                <div class="col-md-2 text-start">
-                    <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
-                </div>
-                <div class="col-md-2 text-start">
-                    <label>Quantity: <div> @product.Quantity</div></label>
-                </div>
-                <div class="col-md-2 text-end">
-                    <button type="button" class="btn btn-danger">Remove</button>
-                </div>
-
-                <!-- Hidden inputs for each product property -->
-                <input type="hidden" name="Products[@Model.IndexOf(product)].Id" value="@product.Id" />
-                <input type="hidden" name="Products[@Model.IndexOf(product)].Name" value="@product.Name" />
-                <input type="hidden" name="Products[@Model.IndexOf(product)].Price" value="@product.Price" />
-                <input type="hidden" name="Products[@Model.IndexOf(product)].ImageUrl" value="@product.ImageUrl" />
-                <input type="hidden" name="Products[@Model.IndexOf(product)].TreeType" value="@product.TreeType" />
-                <input type="hidden" name="Products[@Model.IndexOf(product)].Quantity" value="@product.Quantity" />
+@foreach (var product in Model)
+{
+    totalAmount += product.Price * product.Quantity;
+        <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
+            <div class="col-md-2 text-center">
+            @if (!string.IsNullOrEmpty(product.ImageUrl))
+            {
+                        <img src="@product.ImageUrl" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
+            }
+            else
+            {
+                        <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
+            }
             </div>
-    }
-    <div class="col-md-12 text-end">
-        @if (Model.Count != 0)
+            <div class="col-md-2 text-start">
+                <h5 class="mb-0">@product.Name</h5>
+            </div>
+            <div class="col-md-1 text-start">
+                <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
+            </div>
+            <div class="col-md-1 text-start">
+                <label>Quantity: <div> @product.Quantity</div></label>
+            </div>
+            <div class="col-2">
+                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                    <input style="width:2.5em" type="number" name="quantity" id="quantity" size="4" max="9999"
+                            min="1" value="1" step="1"></input>
+                    <input type="hidden" name="id" value="@product.Id" />
+                    <button type="submit" class="btn btn-sm mb-2 w-50 fw-bold rounded btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="col-md-1 text-start">
+                <label>Total: @((product.Price * product.Quantity).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR")))</label>
+            </div>
+            <div class="col-md-2 text-end">
+                <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                    <input type="hidden" name="productId" value="@product.Id" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </div>
+        </div>
+}
+
+<div class="text-end">
+    <h4>Total Amount: @totalAmount.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h4>
+    <form asp-controller="Order" asp-action="AddToOrders" method="post">
+        @for (int i = 0; i < Model.Count; i++)
         {
-                <label>Total amount of products is: <h5>@totalAmount</h5></label>
+                <input type="hidden" name="products[@i].Id" value="@Model[i].Id" />
+                <input type="hidden" name="products[@i].Name" value="@Model[i].Name" />
+                <input type="hidden" name="products[@i].Price" value="@Model[i].Price" />
+                <input type="hidden" name="products[i].Quantity" value="@Model[i].Quantity" />
+                <input type="hidden" name="products[@i].ImageUrl" value="@Model[i].ImageUrl" />
+                <input type="hidden" name="products[@i].TreeType" value="@Model[i].TreeType" />
+                <input type="hidden" name="products[@i].Quantity" value="@Model[i].Quantity" />
         }
-    </div>
-    <div class="col-md-12 mt-3 text-end">
-        @if (Model.Count != 0)
-        {
-                <button type="submit" class="btn btn-success">Buy</button>
-        }
-    </div>
-</form>
+        <button type="submit" class="btn btn-success">Buy</button>
+    </form>
+</div>
