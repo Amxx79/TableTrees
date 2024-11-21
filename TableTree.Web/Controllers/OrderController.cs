@@ -24,6 +24,7 @@ namespace TableTree.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddToOrders(IEnumerable<ViewModels.Order.ProductViewModel> products)
         {
             var orders = await this.orderService
