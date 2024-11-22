@@ -25,6 +25,7 @@ namespace TableTree.Data
         public DbSet<FavouriteProduct> FavouriteProducts { get; set; }
         public DbSet<ProductStore> Availability { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItemInfo> OrderItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

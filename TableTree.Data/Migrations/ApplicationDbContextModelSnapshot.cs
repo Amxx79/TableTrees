@@ -310,7 +310,7 @@ namespace TableTree.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItemInfo");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("TableTree.Data.Models.Product", b =>
@@ -357,7 +357,7 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c162c79c-bca5-441e-9cde-1487cdac45bf"),
+                            Id = new Guid("e0d105dc-82a5-4be1-a8e5-52fbb39391c1"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
                             ImageUrl = "/images/table-1.jpeg",
@@ -368,7 +368,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b4ac4cb5-a528-4c95-8bc2-1eaa78f380ec"),
+                            Id = new Guid("650d91f6-f68a-4b8c-abcb-28364bd2f9e9"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-2.jpeg",
@@ -379,7 +379,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("54144438-5bc3-4134-a519-f60e9b7ab8f7"),
+                            Id = new Guid("bcc51556-4a28-46fb-8cc9-00029dfca05b"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-3.jpg",
@@ -390,7 +390,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d457edc0-5dd4-484d-b17b-ef7f184af83e"),
+                            Id = new Guid("50643e03-fa65-466b-98c7-de4b2a17d94f"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
                             ImageUrl = "/images/table-4.jpeg",
@@ -401,7 +401,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b9a313ca-776a-41df-90bd-b5ad9851a338"),
+                            Id = new Guid("ae7b702f-64d9-4ced-808e-4baa119731a8"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                             ImageUrl = "/images/table-5.jpg",

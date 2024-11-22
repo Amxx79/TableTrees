@@ -11,11 +11,13 @@ namespace TableTree.Services.Data
     {
         private readonly IRepository<Order> orderRepository;
         private readonly IRepository<Product> productRepository;
+        private readonly IRepository<OrderItemInfo> orderItemsRepository;
 
-        public OrderService(IRepository<Order> orderRepository, IRepository<Product> productRepository)
+        public OrderService(IRepository<Order> orderRepository, IRepository<Product> productRepository, IRepository<OrderItemInfo> orderItemsRepository)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
+            this.orderItemsRepository = orderItemsRepository;
         }
 
         public async Task AddToOrders(OrderViewModel order)
@@ -41,6 +43,7 @@ namespace TableTree.Services.Data
             {
                 OrderItemInfo itemInfo = new OrderItemInfo()
                 {
+                    Id = Guid.NewGuid(),
                     OrderId = newOrder.Id,
                     ProductId = product.Id,
                     Quantity = order.Products.FirstOrDefault(p => p.Id == product.Id).Quantity,
@@ -74,7 +77,8 @@ namespace TableTree.Services.Data
 
         public async Task<OrderDetailsViewModel> GetDetailsOfOrder(Guid orderId)
         {
-            var orders = this.orderRepository.GetAll();
+            var orderItems = this.orderItemsRepository.GetAllAttached().Include(oi => oi.Product).Where(oi => oi.OrderId == orderId);
+            //var currentOrderItems = this.orderRepository.GetAll();
 
             var productInOrder = await this.orderRepository
                 .GetAllAttached()
@@ -92,6 +96,7 @@ namespace TableTree.Services.Data
                             Price = p.Product.Price,
                             ImageUrl = p.Product.ImageUrl,
                             TreeType = p.Product.TreeType.Name,
+                            Quantity = orderItems.FirstOrDefault(oi => oi.ProductId == p.ProductId).Quantity,
                         }).ToList()
                 }).FirstAsync();
 
