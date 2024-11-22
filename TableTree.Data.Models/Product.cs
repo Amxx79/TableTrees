@@ -29,5 +29,6 @@ namespace TableTree.Data.Models
         public IEnumerable<ShoppingCart> ProductsClients { get; set; } = new HashSet<ShoppingCart>();
         public IEnumerable<FavouriteProduct> FavouriteProductsClients { get; set; } = new HashSet<FavouriteProduct>();
         public IEnumerable<ProductStore> ProductStores { get; set; } = new HashSet<ProductStore>();
+        public IEnumerable<OrderItemInfo> OrderItems { get; set; } = new List<OrderItemInfo>();
     }
 }

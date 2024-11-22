@@ -7,6 +7,6 @@ namespace TableTree.Services.Data.Interfaces
         Task<IEnumerable<OrderViewModel>> GetAllOrders();
         Task AddToOrders(OrderViewModel order);
         int GetLatestSequenceNumberAsync();
-        Task<IEnumerable<ProductViewModel>> GetDetailsOfOrder(Guid orderId);
+        Task<OrderDetailsViewModel> GetDetailsOfOrder(Guid orderId);
     }
 }

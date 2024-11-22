@@ -27,14 +27,28 @@ namespace TableTree.Services.Data
                 .Where(product => product != null)
                 .ToList();
 
+            List<OrderItemInfo> itemsInOrder = new List<OrderItemInfo>();
+
             Order newOrder = new Order()
             {
                 SequenceNumber = order.SequenceNumber,
                 ApplicationUserId = Guid.Parse(order.UserId),
                 TotalPrice = Decimal.Parse(order.TotalPrice),
                 OrderDate = DateTime.Parse(order.OrderDate),
-                Items = productsInOrder,
             };
+
+            foreach (var product in productsInOrder)
+            {
+                OrderItemInfo itemInfo = new OrderItemInfo()
+                {
+                    OrderId = newOrder.Id,
+                    ProductId = product.Id,
+                    Quantity = order.Products.FirstOrDefault(p => p.Id == product.Id).Quantity,
+                };
+                itemsInOrder.Add(itemInfo);
+            }
+
+            newOrder.Items = itemsInOrder.ToArray();
 
             await this.orderRepository.AddAsync(newOrder);
             await this.orderRepository.SaveChangesAsync();
@@ -58,23 +72,28 @@ namespace TableTree.Services.Data
             return orders;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetDetailsOfOrder(Guid orderId)
+        public async Task<OrderDetailsViewModel> GetDetailsOfOrder(Guid orderId)
         {
             var orders = this.orderRepository.GetAll();
 
-            IEnumerable<ProductViewModel> productInOrder = this.orderRepository
+            var productInOrder = await this.orderRepository
                 .GetAllAttached()
-                .SelectMany(o => o.Items)
-                .Include(p => p.TreeType)
-                .Select(p => new ProductViewModel()
+                .Where(o => o.Id == orderId)
+                .Select(o => new OrderDetailsViewModel()
                 {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl,
-                    TreeType = p.TreeType.Name,
-                })
-                .ToList();
+                    SequenceNumber = o.SequenceNumber,
+                    OrderDate = o.OrderDate,
+                    TotalPrice = o.TotalPrice,
+                    ProductsInOrder = o.Items
+                        .Select(p => new ProductViewModel()
+                        {
+                            Id = p.Id,
+                            Name = p.Product.Name,
+                            Price = p.Product.Price,
+                            ImageUrl = p.Product.ImageUrl,
+                            TreeType = p.Product.TreeType.Name,
+                        }).ToList()
+                }).FirstAsync();
 
             return productInOrder;
         }

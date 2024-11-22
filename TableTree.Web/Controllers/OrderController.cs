@@ -47,7 +47,7 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid orderId)
         {
-            var model = await this.orderService
+            OrderDetailsViewModel model = await this.orderService
                 .GetDetailsOfOrder(orderId);
 
             return View(model);
