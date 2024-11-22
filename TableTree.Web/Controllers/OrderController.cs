@@ -43,5 +43,15 @@ namespace TableTree.Web.Controllers
 
             return this.RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid orderId)
+        {
+            var model = await this.orderService
+                .GetDetailsOfOrder(orderId);
+
+            return View(model);
+        }
+
     }
 }

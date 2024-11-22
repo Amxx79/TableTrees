@@ -18,11 +18,11 @@
             <div class="col-md-2 text-center">
             @if (!string.IsNullOrEmpty(product.ImageUrl))
             {
-                        <img src="@product.ImageUrl" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
+                <img src="@product.ImageUrl" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
             }
             else
             {
-                        <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
+                <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
             }
             </div>
             <div class="col-md-2 text-start">
@@ -36,8 +36,7 @@
             </div>
             <div class="col-2">
                 <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                    <input style="width:2.5em" type="number" name="quantity" id="quantity" size="4" max="9999"
-                            min="1" value="1" step="1"></input>
+                    <input style="width:2.5em" type="number" value="@product.Quantity" name="quantity" id="quantity" size="4" max="9999" min="1" value="1" step="1"></input>
                     <input type="hidden" name="id" value="@product.Id" />
                     <button type="submit" class="btn btn-sm mb-2 w-50 fw-bold rounded btn-primary">Update</button>
                 </form>
@@ -62,7 +61,7 @@
                 <input type="hidden" name="products[@i].Id" value="@Model[i].Id" />
                 <input type="hidden" name="products[@i].Name" value="@Model[i].Name" />
                 <input type="hidden" name="products[@i].Price" value="@Model[i].Price" />
-                <input type="hidden" name="products[i].Quantity" value="@Model[i].Quantity" />
+                <input type="hidden" name="products[@i].Quantity" value="@Model[i].Quantity" />
                 <input type="hidden" name="products[@i].ImageUrl" value="@Model[i].ImageUrl" />
                 <input type="hidden" name="products[@i].TreeType" value="@Model[i].TreeType" />
                 <input type="hidden" name="products[@i].Quantity" value="@Model[i].Quantity" />

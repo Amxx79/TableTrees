@@ -26,8 +26,8 @@
                     <td>@order.OrderDate</td>
                     <td>@order.TotalPrice</td>
                     <td>
-                        <form asp-action="Details" asp-controller="Orders" method="get">
-                            <input type="hidden" name="id" value="@order.OrderId" />
+                        <form asp-action="Details" asp-controller="Order" method="get">
+                            <input type="hidden" name="orderId" value="@order.OrderId" />
                             <button type="submit" class="btn btn-primary">Details</button>
                         </form>
                     </td>

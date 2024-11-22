@@ -1,5 +1,4 @@
-﻿using TableTree.Web.ViewModels.Cart;
-using TableTree.Web.ViewModels.Order;
+﻿using TableTree.Web.ViewModels.Order;
 
 namespace TableTree.Services.Data.Interfaces
 {
@@ -8,5 +7,6 @@ namespace TableTree.Services.Data.Interfaces
         Task<IEnumerable<OrderViewModel>> GetAllOrders();
         Task AddToOrders(OrderViewModel order);
         int GetLatestSequenceNumberAsync();
+        Task<IEnumerable<ProductViewModel>> GetDetailsOfOrder(Guid orderId);
     }
 }

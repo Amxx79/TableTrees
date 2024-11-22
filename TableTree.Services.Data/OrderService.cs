@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
@@ -57,15 +58,35 @@ namespace TableTree.Services.Data
             return orders;
         }
 
+        public async Task<IEnumerable<ProductViewModel>> GetDetailsOfOrder(Guid orderId)
+        {
+            var orders = this.orderRepository.GetAll();
+
+            IEnumerable<ProductViewModel> productInOrder = this.orderRepository
+                .GetAllAttached()
+                .SelectMany(o => o.Items)
+                .Include(p => p.TreeType)
+                .Select(p => new ProductViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    TreeType = p.TreeType.Name,
+                })
+                .ToList();
+
+            return productInOrder;
+        }
+
         public int GetLatestSequenceNumberAsync()
         {
-            // Get the highest sequence number from the orders table
             var latestOrder = this.orderRepository
-                .GetAll() // Assuming GetAll() returns IQueryable<Order>
+                .GetAll()
                 .OrderByDescending(o => o.SequenceNumber)
                 .FirstOrDefault();
 
-            return latestOrder?.SequenceNumber ?? 0; // Return 0 if there are no orders
+            return latestOrder?.SequenceNumber ?? 0;
         }
     }
 }

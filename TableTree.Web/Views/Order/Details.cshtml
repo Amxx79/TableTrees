@@ -1,0 +1,45 @@
+﻿@using TableTree.Web.ViewModels.Order
+@model List<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl" class="img-fluid" style="max-height: 150px; object-fit: contain;" alt="@product.Name" />
+                        }
+                        else
+                        {
+                            <img src="~/images/no-image.jpg" class="img-fluid" style="max-height: 150px; object-fit: contain;" alt="No Image Available" />
+                        }
+                    </div>
+
+                    <h5 class="card-title text-center mt-3">@product.Name</h5>
+                    <p class="card-text"><strong>Price:</strong> @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
+                    <p class="card-text"><strong>Tree Type:</strong> @product.TreeType</p>
+                    <p class="card-text"><strong>Quantity:</strong> @product.Quantity</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info" role="alert">
+        No products found in this order.
+    </div>
+}
