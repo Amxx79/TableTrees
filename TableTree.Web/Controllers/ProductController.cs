@@ -24,6 +24,9 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //Example for StatusCode 500:
+            /*return StatusCode(500);*/
+
             var model = await productService.GetAllProductsAsync();
             return View(model);
         }
