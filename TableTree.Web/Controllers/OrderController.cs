@@ -18,8 +18,10 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var userIdentiticator = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var model = await this.orderService
-                .GetAllOrders();
+                .GetAllOrders(userIdentiticator);
 
             return View(model);
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Security.Claims;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
@@ -59,10 +60,11 @@ namespace TableTree.Services.Data
             return;
         }
 
-        public async Task<IEnumerable<OrderViewModel>> GetAllOrders()
+        public async Task<IEnumerable<OrderViewModel>> GetAllOrders(string userIdentificator)
         {
             IEnumerable<OrderViewModel> orders = this.orderRepository
                 .GetAllAttached()
+                .Where(o => o.ApplicationUserId == Guid.Parse(userIdentificator))
                 .Select(o => new OrderViewModel()
                 {
                     UserId = o.ApplicationUserId.ToString(),
