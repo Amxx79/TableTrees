@@ -29,11 +29,15 @@ namespace TableTree.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToOrders(IEnumerable<ViewModels.Order.ProductViewModel> products)
         {
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+
             int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
 
             OrderViewModel orderr = new OrderViewModel()
             {
-                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserId = user,
                 OrderDate = DateTime.Now.ToString(),
                 SequenceNumber = highestOrderSequenceNumber + 1,
                 TotalPrice = products.Sum(p => p.Price * p.Quantity).ToString(),

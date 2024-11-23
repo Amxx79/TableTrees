@@ -5,25 +5,36 @@ using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Order;
+using static TableTree.Common.EntityValidationContants;
 
 namespace TableTree.Services.Data
 {
     public class OrderService : IOrderService
     {
         private readonly IRepository<Order> orderRepository;
-        private readonly IRepository<Product> productRepository;
+        private readonly IRepository<TableTree.Data.Models.Product> productRepository;
         private readonly IRepository<OrderItemInfo> orderItemsRepository;
+        private readonly ICartService cartService;
 
-        public OrderService(IRepository<Order> orderRepository, IRepository<Product> productRepository, IRepository<OrderItemInfo> orderItemsRepository)
+        public OrderService(IRepository<Order> orderRepository,
+            IRepository<TableTree.Data.Models.Product> productRepository,
+            IRepository<OrderItemInfo> orderItemsRepository,
+            ICartService cartService)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
             this.orderItemsRepository = orderItemsRepository;
+            this.cartService = cartService;
         }
 
         public async Task AddToOrders(OrderViewModel order)
         {
             var allProducts = this.productRepository.GetAll();
+
+            foreach (var product in order.Products)
+            {
+                await this.cartService.RemoveProduct(product.Id.ToString(), order.UserId);
+            }
 
             var productsInOrder = order.Products
                 .Select(pvm => allProducts.FirstOrDefault(p => p.Id == Guid.Parse(pvm.Id.ToString())))
@@ -80,7 +91,6 @@ namespace TableTree.Services.Data
         public async Task<OrderDetailsViewModel> GetDetailsOfOrder(Guid orderId)
         {
             var orderItems = this.orderItemsRepository.GetAllAttached().Include(oi => oi.Product).Where(oi => oi.OrderId == orderId);
-            //var currentOrderItems = this.orderRepository.GetAll();
 
             var productInOrder = await this.orderRepository
                 .GetAllAttached()

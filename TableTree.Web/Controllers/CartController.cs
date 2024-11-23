@@ -19,8 +19,11 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
             var model = await this.cartService
-                .GetAllProductsInCartAsync();
+                .GetAllProductsInCartAsync(userId);
 
             return View(model);
         }

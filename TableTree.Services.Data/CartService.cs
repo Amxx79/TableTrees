@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
@@ -36,8 +35,6 @@ namespace TableTree.Services.Data
                 addedToCartAlready.QuantityOfProducts = quantity;
                 await productClientRepository.UpdateAsync(addedToCartAlready);
                 return;
-                //await RemoveProduct(addedToCartAlready.Product.Id.ToString(), addedToCartAlready.ApplicationUser.Id.ToString());
-                //await AddProductAsync(productId, userId, quantity);
             }
 
             if (addedToCartAlready == null)
@@ -71,10 +68,11 @@ namespace TableTree.Services.Data
             }
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync()
+        public async Task<IEnumerable<ProductViewModel>> GetAllProductsInCartAsync(string userId)
         {
             IEnumerable<ProductViewModel> model = await this.productClientRepository
                 .GetAllAttached()
+                .Where(p => p.ApplicationUserId == Guid.Parse(userId))
                 .Include(pc => pc.Product)
                 .Select(pc => new ProductViewModel()
                 {
