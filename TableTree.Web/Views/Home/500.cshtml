@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Internal Server Error";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use your layout file
+}
+
+<div class="container text-center" style="margin-top: 50px;">
+    <h1 class="display-4 text-danger">500</h1>
+    <h2>Oops! Something went wrong.</h2>
+    <p class="lead">We encountered an internal error and couldn’t complete your request. Please try again later.</p>
+    <div class="mt-4">
+        <img src="~/images/500.jpg" alt="Internal Server Error" class="img-fluid" style="max-height: 300px;" />
+    </div>
+    <div class="mt-5">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
+    </div>
+</div>
