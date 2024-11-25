@@ -68,6 +68,7 @@ namespace TableTree.Services.Data
             IEnumerable<ProductViewModel> products = await this.repository
                 .GetAllAttached()
                 .Where(p => p.IsDeleted == false)
+                .AsNoTracking()
                 .Select(p => new ProductViewModel()
                 {
                     Id = p.Id,

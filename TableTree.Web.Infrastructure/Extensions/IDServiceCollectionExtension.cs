@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Security.Principal;
 using TableTree.Data;
 using TableTree.Data.Models;
 using TableTree.Data.Repository;
@@ -61,6 +61,62 @@ namespace Microsot.Extensions.DependencyInjection
             services.AddScoped<IOrderService, OrderService>();
 
             return services;
+        }
+
+        public static async Task<IApplicationBuilder> SeedGlobalAdministrator(IApplicationBuilder app, string email, string password)
+        {
+            using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
+            IServiceProvider serviceProvider = serviceScope.ServiceProvider;
+            RoleManager<ApplicationRole>? roleManager = serviceProvider.GetService<RoleManager<ApplicationRole>>();
+            UserManager<ApplicationUser>? userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            IUserStore<ApplicationUser>? userStore = serviceProvider.GetService<IUserStore<ApplicationUser>>();
+            SignInManager<ApplicationUser>? signInManager = serviceProvider.GetService<SignInManager<ApplicationUser>>();
+            
+            ApplicationUser applicationUser = await userManager.FindByEmailAsync(email);
+
+            if (applicationUser != null)
+            {
+                return app;
+            }
+
+            if (roleManager == null)
+            {
+                throw new ArgumentNullException("Service cannot be obtained");
+            }
+
+            ApplicationUser applicationAdmin = new ApplicationUser() 
+            {
+                Email = email,
+                UserName = email,
+            };
+
+            IdentityResult result =  await userManager.CreateAsync(applicationAdmin, password);
+
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException("Error occurred while registering user!");
+            }
+
+            var claimsPrincipalUser = await signInManager.CreateUserPrincipalAsync(applicationAdmin);
+
+            string role = "GlobalAdmin";
+
+            if (await roleManager.RoleExistsAsync(role) == false)
+            {
+                result = await roleManager.CreateAsync(new ApplicationRole(role));
+            }
+
+            if (claimsPrincipalUser.IsInRole(role) == false && (result == null || result.Succeeded))
+            {
+                var currentUser = await userManager.FindByNameAsync(claimsPrincipalUser.Identity.Name);
+
+                if (claimsPrincipalUser != null)
+                {
+                    await userManager.AddToRoleAsync(currentUser, role);
+                }
+            }
+
+            return app;
         }
     }
 }

@@ -1,4 +1,6 @@
 using Microsot.Extensions.DependencyInjection;
+using TableTree.Data.Models;
+using TableTree.Services.Data;
 
 namespace TableTree.Web
 {
@@ -11,16 +13,17 @@ namespace TableTree.Web
             // Add services to the container.
             builder.Services.AddApplicationDatabase(builder.Configuration);
 
+            string adminUserEmail = builder.Configuration.GetValue<string>("AdminCredentials:Email")!;
+            string adminUserPassword = builder.Configuration.GetValue<string>("AdminCredentials:Password")!;
+
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddApplicationIdentity(builder.Configuration);
             builder.Services.AddApplicationServices(builder.Configuration);
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-
             builder.Services.AddMvc();
 
-            builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -42,6 +45,8 @@ namespace TableTree.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            IDServiceCollectionExtension.SeedGlobalAdministrator(app, adminUserEmail, adminUserPassword);
 
             app.UseHttpsRedirection();
 
