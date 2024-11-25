@@ -63,7 +63,7 @@ namespace Microsot.Extensions.DependencyInjection
             return services;
         }
 
-        public static async Task<IApplicationBuilder> SeedGlobalAdministrator(IApplicationBuilder app, string email, string password)
+        public static async Task<IApplicationBuilder> SeedGlobalAdministrator(this IApplicationBuilder app, string email, string password)
         {
             using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
             IServiceProvider serviceProvider = serviceScope.ServiceProvider;

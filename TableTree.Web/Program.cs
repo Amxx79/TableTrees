@@ -46,7 +46,7 @@ namespace TableTree.Web
 
             app.UseAuthorization();
 
-            IDServiceCollectionExtension.SeedGlobalAdministrator(app, adminUserEmail, adminUserPassword);
+            app.SeedGlobalAdministrator(adminUserEmail, adminUserPassword);
 
             app.UseHttpsRedirection();
 
