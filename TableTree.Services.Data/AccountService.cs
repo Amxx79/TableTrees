@@ -18,6 +18,25 @@ namespace TableTree.Services.Data
             this.roleManager = roleManager;
         }
 
+        public async Task<bool> DeleteUser(string userId)
+        {
+            ApplicationUser? user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            IdentityResult result = await userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<List<UserRoleViewModel>> GetlAllUsers()
         {
             List<UserRoleViewModel> model = new List<UserRoleViewModel>();

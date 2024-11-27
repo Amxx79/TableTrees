@@ -9,20 +9,27 @@
             <th>User Name</th>
             <th>Is Admin</th>
             <th>Actions</th>
+            <th>Remove</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
                 <tr>
-                    <td>@user.Username</td>
-                    <td>@user.IsAdmin</td>
-                    <td>
+                    <td class="col-md-3">@user.Username</td>
+                    <td class="col-md-3">@user.IsAdmin</td>
+                    <td class="col-md-3">
                         <form asp-action="MakeUserAdmin" method="post">
                             <input type="hidden" name="userId" value="@user.Id" />
                             <button type="submit" class="btn btn-@(user.IsAdmin ? "danger" : "success")">
                             @(user.IsAdmin ? "Remove Admin" : "Make Admin")
                             </button>
+                        </form>
+                    </td>
+                    <td class="col-md-3">
+                        <form asp-action="DeleteUser" method="post">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-warning">Delete User</button>
                         </form>
                     </td>
                 </tr>

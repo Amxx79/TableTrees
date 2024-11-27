@@ -8,5 +8,6 @@ namespace TableTree.Services.Data.Interfaces
         Task MakeUserAdmin(ClaimsPrincipal user);
         Task MakeUserGlobalAdmin(ClaimsPrincipal user);
         Task<List<UserRoleViewModel>> GetlAllUsers();
+        Task<bool> DeleteUser(string userId);
     }
 }

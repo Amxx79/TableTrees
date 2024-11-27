@@ -55,5 +55,19 @@ namespace TableTree.Web.Controllers
             return RedirectToAction(nameof(Index), "Product");
         }
 
+        [Authorize(Roles = "GlobalAdmin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var result = await this.accountService.DeleteUser(userId);
+
+            if (result == true)
+            {
+                return this.RedirectToAction(nameof(Index), "Account");
+            }
+
+            return BadRequest();
+        }
+
     }
 }
