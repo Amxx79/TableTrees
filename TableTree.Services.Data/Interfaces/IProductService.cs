@@ -7,7 +7,7 @@ namespace TableTree.Services.Data.Interfaces
     {
         Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
         Task AddProductAsync(AddProductInputModel model);
-        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
+        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id); //DONE TESTING
         Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id); //DONE TESTING
         EditProductViewModel GetProductForEditById(Guid id); //DONE TESTING
         Task<bool> EditProductAsync(EditProductViewModel model);

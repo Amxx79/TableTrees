@@ -1,3 +1,30 @@
 ﻿.svg {
     color: gold;
 }
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border: 1px solid #e3e6f0;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05) !important;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+.btn {
+    border-radius: 5px;
+}
