@@ -61,6 +61,7 @@
                         <div class="row gx-2 mt-2">
                             <div class="col-6">
                                 <form asp-controller="Product" asp-action="AddProductToStore" method="get">
+                                    <input type="hidden" name="productId" value="@product.Id"/>
                                     <button class="btn btn-warning btn-sm w-100">Add to Store</button>
                                 </form>
                             </div>
