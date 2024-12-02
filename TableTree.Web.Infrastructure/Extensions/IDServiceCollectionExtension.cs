@@ -99,24 +99,38 @@ namespace Microsot.Extensions.DependencyInjection
 
             var claimsPrincipalUser = await signInManager.CreateUserPrincipalAsync(applicationAdmin);
 
-            string role = "GlobalAdmin";
+            string roleGlobalAdmin = "GlobalAdmin";
+            string roleAdmin = "Admin";
 
-            if (await roleManager.RoleExistsAsync(role) == false)
+            if (await roleManager.RoleExistsAsync(roleGlobalAdmin) == false)
             {
-                result = await roleManager.CreateAsync(new ApplicationRole(role));
+                result = await roleManager.CreateAsync(new ApplicationRole(roleGlobalAdmin));
+            }
+            if (await roleManager.RoleExistsAsync(roleAdmin) == false)
+            {
+                result = await roleManager.CreateAsync(new ApplicationRole(roleAdmin));
             }
 
-            if (claimsPrincipalUser.IsInRole(role) == false && (result == null || result.Succeeded))
+            if (claimsPrincipalUser.IsInRole(roleGlobalAdmin) == false && (result == null || result.Succeeded))
             {
                 var currentUser = await userManager.FindByNameAsync(claimsPrincipalUser.Identity.Name);
 
                 if (claimsPrincipalUser != null)
                 {
-                    await userManager.AddToRoleAsync(currentUser, role);
+                    await userManager.AddToRoleAsync(currentUser, roleGlobalAdmin);
                 }
             }
 
-            return app;
+            if (claimsPrincipalUser.IsInRole(roleAdmin) == false && (result == null || result.Succeeded))
+            {
+                var currentUser = await userManager.FindByNameAsync(claimsPrincipalUser.Identity.Name);
+
+                if (claimsPrincipalUser != null)
+                {
+                    await userManager.AddToRoleAsync(currentUser, roleAdmin);
+                }
+            }
+                return app;
         }
     }
 }
