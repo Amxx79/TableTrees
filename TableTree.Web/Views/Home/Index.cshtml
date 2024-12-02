@@ -1,8 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using TableTree.Web.ViewModels.Product;
+@model IEnumerable<ProductViewModel>;
+
+@{
+    ViewBag.Title = "Welcome to TableTree";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/home.css">
+
+<div class="hero-section text-center text-white bg-primary py-5">
+    <h1 class="display-4">Welcome to TableTree</h1>
+    <p class="lead">Crafting Unique Tables from Natural Trees</p>
+    <a href="/Product/Index" class="btn btn-light btn-lg">Explore Our Collection</a>
+</div>
+
+<div class="about-section container py-5 d-flex flex-wrap">
+    <div class="col-md-6 text-center my-auto">
+        <h2>About Us</h2>
+        <p>At TableTree, we believe every tree has a story. We craft unique, eco-friendly tables that bring nature's beauty into your home.</p>
+    </div>
+</div>
+
+<div class="featured-products bg-light py-5">
+    <div class="container">
+        <h3 class="text-center mb-4">Our Featured Products</h3>
+        <div class="row g-4">
+            @foreach (var product in Model.Take(3).OrderByDescending(p => p.Price))
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="text-success fw-bold">@product.Price.ToString("C")</p>
+                            <a href="/Product/Details/@product.Id" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="testimonials-section py-5 d-flex flex-wrap">
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-md-end my-auto">
+        <h3>What Our Customers Say</h3>
+        <blockquote class="blockquote">
+            <p class="mb-0">"The craftsmanship is impeccable. These tables are art pieces!"</p>
+            <footer style="margin-top:5px;" class="blockquote-footer">Jane Doe</footer>
+        </blockquote>
+        <blockquote class="blockquote">
+            <p class="mb-0">"Bringing nature into my dining room never felt this classy!"</p>
+            <footer style="margin-top:5px;" class="blockquote-footer">Mark Smith</footer>
+        </blockquote>
+    </div>
+</div>
+
+<div class="contact-section text-center bg-dark text-white py-5">
+    <h4>Get in Touch</h4>
+    <p>Email: <a href="mailto:contact@tabletree.com" class="text-decoration-none text-white">contact@tabletree.com</a> | Phone: +1 234 567 890</p>
+    <a href="/Home/Contact" class="btn btn-outline-light">Contact Us</a>
 </div>

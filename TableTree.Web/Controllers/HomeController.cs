@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TableTree.Services.Data;
+using TableTree.Services.Data.Interfaces;
 using TableTree.Web.Models;
 
 namespace TableTree.Web.Controllers
@@ -7,15 +9,18 @@ namespace TableTree.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<ProductController> _logger;
+        private readonly IProductService productService;
 
-        public HomeController(ILogger<ProductController> logger)
+        public HomeController(ILogger<ProductController> logger, IProductService productService)
         {
-            _logger = logger;
+            this._logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await productService.GetAllProductsAsync();
+            return View(model);
         }
 
         public IActionResult Privacy()

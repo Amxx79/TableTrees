@@ -1,0 +1,22 @@
+﻿.hero-section {
+    background: url('~/img/hero.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+}
+
+.about-section img,
+.testimonials-section img {
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin: 1rem 0;
+}
