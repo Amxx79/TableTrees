@@ -3,8 +3,6 @@ using NUnit.Framework;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data;
-using TableTree.Services.Data.Interfaces;
-using TableTree.Web.Controllers;
 using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Tests
@@ -20,7 +18,7 @@ namespace TableTree.Tests
         [Test]
         public async Task ProductServiceReturnsObject()
         {
-            var productRepository = new Mock<IRepository<Product>>();
+            var productRepository = new Mock<IRepository<Data.Models.Product>>();
             var id = Guid.NewGuid();
 
             productRepository.Setup(repo => repo.GetById(id))
@@ -43,12 +41,52 @@ namespace TableTree.Tests
         public void ProductServiceReturns_ModelForEdit()
         {
             var mockedRepository = new Mock<IRepository<Product>>();
+
+            var productsToReturn = GetProductList();
+
+            mockedRepository.Setup(repo => repo.GetAll())
+                .Returns(productsToReturn);
+
+            var service = new ProductService(mockedRepository.Object);
+
+            var result = service.GetProductForEditById(productsToReturn.First().Id);
+
+            Assert.That(result.Id, Is.EqualTo(productsToReturn.First().Id));
+            Assert.That(result.Name, Is.EqualTo("Sample"));
+            Assert.That(result.Price, Is.EqualTo(999)); // Validate category is set correctly
+            Assert.That(result.ImageUrl, Is.EqualTo("/images/table-1.jpeg"));
+        }
+
+        [Test]
+        public async Task ProductServiceReturns_ModelDetails()
+        {
+            var mockedRepository = new Mock<IRepository<Product>>();
+
             var firstId = Guid.NewGuid();
             var secondId = Guid.NewGuid();
+            var category = new Category { Id = Guid.Parse("61BC3294-73CA-441B-9B53-0D4F26B673F3"), Name = "Wood" };
+            var treeType = new TreeType { Id = Guid.Parse("401DD5CD-C271-4960-84CE-0B364C96F039"), Name = "Oak" };
 
-			var category = new Category { Id = Guid.Parse("61BC3294-73CA-441B-9B53-0D4F26B673F3"), Name = "Wood" };
-			var treeType = new TreeType { Id = Guid.Parse("401DD5CD-C271-4960-84CE-0B364C96F039"), Name = "Oak" };
+            var productsToReturn = GetProductList();
 
+            mockedRepository.Setup(repo => repo.GetAllAttached())
+                .Returns(productsToReturn.AsQueryable());
+
+            var service = new ProductService(mockedRepository.Object);
+
+            var result = await service.GetProductDetailsByIdAsync(productsToReturn.First().Id);
+
+            Assert.That(result.Id, Is.EqualTo(productsToReturn.First().Id));
+            Assert.That(result.Name, Is.EqualTo("Sample"));
+            Assert.That(result.ToString(), Is.EqualTo("TableTree.Web.ViewModels.Product.ProductDetailsViewModel"));
+        }
+
+        private List<Product> GetProductList()
+        {
+            var category = new Category { Id = Guid.Parse("61BC3294-73CA-441B-9B53-0D4F26B673F3"), Name = "Wood" };
+            var treeType = new TreeType { Id = Guid.Parse("401DD5CD-C271-4960-84CE-0B364C96F039"), Name = "Oak" };
+            var firstId = Guid.NewGuid();
+            var secondId = Guid.NewGuid();
 
             var productsToReturn = new List<Product>
             {
@@ -61,37 +99,27 @@ namespace TableTree.Tests
                     ImageUrl = "/images/table-1.jpeg",
                     IsDeleted = false,
                     Category = category,
-					CategoryId = category.Id,
+                    CategoryId = category.Id,
                     TreeType = treeType,
-					TreeTypeId = treeType.Id,
-				},
-	            new Product
-	            {
-		            Id = secondId,
-		            Name = "Another Sample",
-		            Description = "Another description",
-		            Price = 1999m,
-					ImageUrl = "/images/table-1.jpeg",
-					IsDeleted = false,
-					Category = category,
-					CategoryId = category.Id,
-					TreeType = treeType,
-					TreeTypeId = treeType.Id,
-				}
+                    TreeTypeId = treeType.Id,
+                },
+                new Product
+                {
+                    Id = secondId,
+                    Name = "Another Sample",
+                    Description = "Another description",
+                    Price = 1999m,
+                    ImageUrl = "/images/table-1.jpeg",
+                    IsDeleted = false,
+                    Category = category,
+                    CategoryId = category.Id,
+                    TreeType = treeType,
+                    TreeTypeId = treeType.Id,
+                }
             };
 
-            mockedRepository.Setup(repo => repo.GetAll())
-                .Returns(productsToReturn);
-
-			var service = new ProductService(mockedRepository.Object);
-
-            var result = service.GetProductForEditById(firstId);
-
-            Assert.That(result.Id, Is.EqualTo(firstId));
-			Assert.That(result.Name, Is.EqualTo("Sample"));
-			Assert.That(result.Price, Is.EqualTo(999)); // Validate category is set correctly
-			Assert.That(result.ImageUrl, Is.EqualTo("/images/table-1.jpeg"));
-		}
-
-	}
+            return productsToReturn;
+        }
+    }
 }
+

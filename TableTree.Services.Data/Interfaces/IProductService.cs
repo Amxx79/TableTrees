@@ -8,8 +8,8 @@ namespace TableTree.Services.Data.Interfaces
         Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
         Task AddProductAsync(AddProductInputModel model);
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
-        Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id);
-        EditProductViewModel GetProductForEditById(Guid id);
+        Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id); //DONE TESTING
+        EditProductViewModel GetProductForEditById(Guid id); //DONE TESTING
         Task<bool> EditProductAsync(EditProductViewModel model);
         bool EditProduct(EditProductViewModel model);
         Task<Product> GetProductByIdAsync(Guid id); //DONE TESTING
