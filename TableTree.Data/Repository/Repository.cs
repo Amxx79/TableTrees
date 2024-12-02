@@ -65,7 +65,6 @@ namespace TableTree.Data.Repository
             await dbSet.AddRangeAsync();
             await dbContext.SaveChangesAsync();
         }
-
         public bool Delete(TType item)
         {
             dbSet.Remove(item);

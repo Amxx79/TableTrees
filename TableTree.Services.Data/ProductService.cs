@@ -77,7 +77,7 @@ namespace TableTree.Services.Data
                     ImageUrl = p.ImageUrl,
                     TreeType = p.TreeType.Name,
                 })
-                .ToArrayAsync();
+                .ToListAsync();
 
             return products;
         }

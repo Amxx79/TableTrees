@@ -12,8 +12,8 @@ namespace TableTree.Services.Data.Interfaces
         EditProductViewModel GetProductForEditById(Guid id);
         Task<bool> EditProductAsync(EditProductViewModel model);
         bool EditProduct(EditProductViewModel model);
-        Task<Product> GetProductByIdAsync(Guid id);
-        Product GetProductById(Guid id);
+        Task<Product> GetProductByIdAsync(Guid id); //DONE TESTING
+		Product GetProductById(Guid id); //DONE TESTING
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<TreeType>> GetAllTreeTypesAsync();
         IEnumerable<Category> GetAllCategories();
