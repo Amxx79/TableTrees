@@ -44,17 +44,28 @@
                             </div>
                     </div>
                     <div class="row gx-2">
-                        <div class="col-6">
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                                class="btn btn-primary btn-sm w-100">Details</a>
-                        </div>
-                        <div class="col-6">
-                            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center">
-                                <input type="number" name="quantity" id="quantity" value="1" min="1" max="9999" step="1" class="form-control form-control-sm me-1" style="width: 4rem;" />
-                                <input type="hidden" name="id" value="@product.Id" />
-                                <button type="submit" class="btn btn-success btn-sm">Buy</button>
-                            </form>
-                        </div>
+                        @if(User.Identity.IsAuthenticated) 
+                        {
+                            <div class="col-6">
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                                    class="btn btn-primary btn-sm w-100">Details</a>
+                            </div>
+                            <div class="col-6">
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center">
+                                    <input type="number" name="quantity" id="quantity" value="1" min="1" max="9999" step="1" class="form-control form-control-sm me-1" style="width: 4rem;" />
+                                    <input type="hidden" name="id" value="@product.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">Buy</button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                                    class="btn btn-primary btn-sm w-100">Details</a>
+                            </div>
+                        }
+
                     </div>
                     @if (User.IsInRole("Admin"))
                     {
