@@ -3,11 +3,12 @@ using NUnit.Framework;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data;
-using TableTree.Web.ViewModels.Product;
+using TableTree.Services.Data.Interfaces;
+using TableTree.Web.ViewModels.Cart;
 
 namespace TableTree.Tests
 {
-    [TestFixture]
+	[TestFixture]
     public class Tests
     {
         [SetUp]
@@ -81,7 +82,73 @@ namespace TableTree.Tests
             Assert.That(result.ToString(), Is.EqualTo("TableTree.Web.ViewModels.Product.ProductDetailsViewModel"));
         }
 
-        private List<Product> GetProductList()
+        [Test]
+        public async Task ProductServiceReturns_AllProducts()
+        {
+            var mockedRepository = new Mock<IRepository<Product>>();
+
+            var productsToReturn = GetProductList();
+
+            mockedRepository.Setup(repo => repo.GetAllAttached())
+                .Returns(productsToReturn.AsQueryable());
+
+            var service = new ProductService(mockedRepository.Object);
+
+            var result = service.GetAllProductsAsync();
+
+            Assert.That(result, Is.Not.Null);
+        }
+
+        [Test]
+        public void ProductServiceReturns_AllCategories()
+        {
+            var mockedRepository = new Mock<IRepository<Product>>();
+
+            var categoriesToReturn = GetCategoriesList();
+
+            mockedRepository.Setup(repo => repo.GetAllCategories())
+                .Returns(categoriesToReturn);
+
+            var service = new ProductService(mockedRepository.Object);
+
+            var result = service.GetAllCategories();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.First().Name, Is.EqualTo("Table"));
+            Assert.That(result.Last().Name, Is.EqualTo("Mirror"));
+        }
+
+        [Test]
+        public async Task ProductServiceReturns_AddProductModel()
+        {
+            var mockedRepository = new Mock<IRepository<Product>>();
+
+            var productsToReturn = GetProductList();
+
+            mockedRepository.Setup(repo => repo.AddAsync(productsToReturn.First()))
+                .ReturnsAsync(true);
+            mockedRepository.Setup(repo => repo.GetAllAsync())
+                .ReturnsAsync(GetProductList());
+
+			var service = new ProductService(mockedRepository.Object);
+
+            Web.ViewModels.Product.AddProductInputModel modelToAdd = new Web.ViewModels.Product.AddProductInputModel()
+            {
+                Name = productsToReturn.First().Name,
+                Description = productsToReturn.First().Description,
+                Price = productsToReturn.First().Price,
+                ImageUrl = productsToReturn.First().ImageUrl,
+                Category = productsToReturn.First().Category.Id,
+            };
+
+            await service.AddProductAsync(modelToAdd);
+
+            Assert.That(await mockedRepository.Object.GetAllAsync(), Is.Not.Null);
+            Assert.That(mockedRepository.Object.GetAll().First().Name, Is.EqualTo(productsToReturn.First().Name));
+        }
+
+
+		private List<Product> GetProductList()
         {
             var category = new Category { Id = Guid.Parse("61BC3294-73CA-441B-9B53-0D4F26B673F3"), Name = "Wood" };
             var treeType = new TreeType { Id = Guid.Parse("401DD5CD-C271-4960-84CE-0B364C96F039"), Name = "Oak" };
@@ -119,6 +186,24 @@ namespace TableTree.Tests
             };
 
             return productsToReturn;
+        }
+        private List<Category> GetCategoriesList()
+        {
+            var categoriesToReturn = new List<Category>()
+            {
+                new Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Table",
+                },
+                new Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Mirror",
+                },
+            };
+
+            return categoriesToReturn;
         }
     }
 }
