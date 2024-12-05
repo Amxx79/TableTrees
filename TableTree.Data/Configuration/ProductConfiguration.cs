@@ -27,6 +27,11 @@ namespace TableTree.Data.Configuration
                 .HasForeignKey(p => p.TreeTypeId);
 
             builder
+                .HasMany(p => p.Comments)
+                .WithOne(c => c.Product)
+                .HasForeignKey(c => c.ProductId);
+
+            builder
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");
 

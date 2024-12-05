@@ -30,5 +30,6 @@ namespace TableTree.Data.Models
         public IEnumerable<FavouriteProduct> FavouriteProductsClients { get; set; } = new HashSet<FavouriteProduct>();
         public IEnumerable<ProductStore> ProductStores { get; set; } = new HashSet<ProductStore>();
         public IEnumerable<OrderItemInfo> OrderItems { get; set; } = new List<OrderItemInfo>();
+        public IEnumerable<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
