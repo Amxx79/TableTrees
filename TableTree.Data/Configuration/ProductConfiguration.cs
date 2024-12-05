@@ -96,7 +96,7 @@ namespace TableTree.Data.Configuration
                     Name = "Rustic Live Edge Tree Table",
                     Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                     Price = 799.99m,
-                    ImageUrl = "/images/table-5.jpg",
+                    ImageUrl = "/images/table-5.jpeg",
                     IsDeleted = false,
                     CategoryId = Guid.Parse("A1042FEE-F95A-4BF3-A758-49B13CFF3E79"),
                     TreeTypeId = Guid.Parse("632BFA2F-AA06-4C1B-913D-33EF43A44D34"),
