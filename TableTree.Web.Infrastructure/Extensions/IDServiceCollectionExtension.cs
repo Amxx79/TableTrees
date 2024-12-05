@@ -14,7 +14,7 @@ using TableTree.Services.Data.Interfaces;
 
 namespace Microsot.Extensions.DependencyInjection
 {
-    public static class IDServiceCollectionExtension
+	public static class IDServiceCollectionExtension
     {
         public static IServiceCollection AddApplicationDatabase(this IServiceCollection services, IConfiguration config)
         {

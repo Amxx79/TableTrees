@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TableTree.Data.Models;
@@ -13,13 +14,15 @@ namespace TableTree.Web.Controllers
         private readonly ILogger<ProductController> logger;
         private readonly IProductService productService;
         private readonly IAvailabilityService availabilityService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ProductController(ILogger<ProductController> logger, IProductService productService,
-            IAvailabilityService availabilityService)
+		public ProductController(ILogger<ProductController> logger, IProductService productService,
+            IAvailabilityService availabilityService, UserManager<ApplicationUser> userManager)
         {
             this.logger = logger;
             this.productService = productService;
             this.availabilityService = availabilityService;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -130,18 +133,26 @@ namespace TableTree.Web.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddCommentToProduct(Guid productId, string text)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			ApplicationUser user = await userManager.FindByIdAsync(userId);
+            Product product = await this.productService.GetProductByIdAsync(productId);
+
             CommentInputModel model = new CommentInputModel()
             {
-                ApplicationUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                ApplicationUserId = Guid.Parse(userId),
+                ApplicationUser = user,
                 CommentDescription = text,
                 ProductId = productId,
+                Product = product,
             };
 
             await this.productService.AddCommentToProduct(model);
 
-            return this.View();
-        }
+			return this.RedirectToAction("Details", new { id = product.Id });
+		}
     }
 }

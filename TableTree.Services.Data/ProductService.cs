@@ -108,6 +108,8 @@ namespace TableTree.Services.Data
 				.GetAllAttached()
                 .Include(p => p.Category)
                 .Include(p => p.TreeType)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.ApplicationUser)
                 .Include(p => p.ProductStores.Where(ps => ps.IsDeleted == false))
                 .ThenInclude(ps => ps.Store)
                 .FirstOrDefault(p => p.Id == id);
@@ -122,6 +124,7 @@ namespace TableTree.Services.Data
                 Category = product.Category,
                 TreeType = product.TreeType,
                 ProductStores = product.ProductStores,
+                Comments = product.Comments,
             };
 
             return model;
@@ -192,9 +195,11 @@ namespace TableTree.Services.Data
             {
                 Id = Guid.NewGuid(),
                 ApplicationUserId = model.ApplicationUserId,
+                ApplicationUser = model.ApplicationUser,
                 CommentDescription = model.CommentDescription,
                 PostedOn = DateTime.UtcNow,
                 ProductId = model.ProductId,
+                Product = model.Product,
             };
 
             await this.commentRepository.AddAsync(comment);
