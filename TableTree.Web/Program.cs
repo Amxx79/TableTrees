@@ -66,6 +66,10 @@ namespace TableTree.Web
                 name: "routeForId",
                 pattern: "{controller=Product}/{action=Delete}/{id?}");
 
+            app.MapControllerRoute(
+                name: "routeForAreas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}");
+
             app.MapRazorPages();
 
             app.Run();

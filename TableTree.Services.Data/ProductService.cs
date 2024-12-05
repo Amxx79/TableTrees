@@ -197,7 +197,7 @@ namespace TableTree.Services.Data
                 ApplicationUserId = model.ApplicationUserId,
                 ApplicationUser = model.ApplicationUser,
                 CommentDescription = model.CommentDescription,
-                PostedOn = DateTime.UtcNow,
+                PostedOn = DateTime.Now,
                 ProductId = model.ProductId,
                 Product = model.Product,
             };
