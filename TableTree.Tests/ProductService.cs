@@ -1,10 +1,12 @@
 using Moq;
 using NUnit.Framework;
+using System.Xml.Serialization;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Cart;
+using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Tests
 {
@@ -144,11 +146,39 @@ namespace TableTree.Tests
             await service.AddProductAsync(modelToAdd);
 
             Assert.That(await mockedRepository.Object.GetAllAsync(), Is.Not.Null);
-            Assert.That(mockedRepository.Object.GetAll().First().Name, Is.EqualTo(productsToReturn.First().Name));
+            Assert.That(mockedRepository.Object.GetAllAsync().Result.First().Name, Is.EqualTo(productsToReturn.First().Name));
+        }
+        [Test]
+        public void ProductServiceReturns_EditProduct()
+        {
+            var mockedRepository = new Mock<IRepository<Product>>();
+
+            var productsToReturn = GetProductList();
+
+            mockedRepository.Setup(repo => repo.Update(productsToReturn.Last()))
+                .Returns(true);
+            mockedRepository.Setup(repo => repo.GetById(productsToReturn.Last().Id))
+                .Returns(productsToReturn.Last());
+
+            var service = new ProductService(mockedRepository.Object);
+
+            EditProductViewModel modelToEdit = new EditProductViewModel()
+            {
+                Id = productsToReturn.Last().Id,
+                Name = productsToReturn.Last().Name,
+                Description = productsToReturn.Last().Description,
+                Price = productsToReturn.Last().Price,
+                ImageUrl = productsToReturn.Last().ImageUrl,
+            };
+
+            var result = service.EditProduct(modelToEdit);
+
+            Assert.That(result, Is.EqualTo(true));
+            Assert.That(mockedRepository.Object.GetById(productsToReturn.Last().Id).Id, Is.EqualTo(productsToReturn.Last().Id));
         }
 
 
-		private List<Product> GetProductList()
+        private List<Product> GetProductList()
         {
             var category = new Category { Id = Guid.Parse("61BC3294-73CA-441B-9B53-0D4F26B673F3"), Name = "Wood" };
             var treeType = new TreeType { Id = Guid.Parse("401DD5CD-C271-4960-84CE-0B364C96F039"), Name = "Oak" };
