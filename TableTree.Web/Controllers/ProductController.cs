@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using TableTree.Data.Models;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Product;
 using TableTree.Web.ViewModels.Store;
@@ -24,9 +25,6 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //Example for StatusCode 500:
-            /*return StatusCode(500);*/
-
             var model = await productService.GetAllProductsAsync();
             return View(model);
         }
@@ -130,6 +128,20 @@ namespace TableTree.Web.Controllers
 
             //TODO: Check what have to do when the data is ready.
             return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AddCommentToProduct(Guid productId, string text)
+        {
+            CommentInputModel model = new CommentInputModel()
+            {
+                ApplicationUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                CommentDescription = text,
+                ProductId = productId,
+            };
+
+            await this.productService.AddCommentToProduct(model);
+
+            return this.View();
         }
     }
 }

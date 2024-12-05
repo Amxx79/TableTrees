@@ -52,6 +52,7 @@ namespace Microsot.Extensions.DependencyInjection
             services.AddScoped<IRepository<Store>, Repository<Store>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IRepository<OrderItemInfo>, Repository<OrderItemInfo>>();
+            services.AddScoped<IRepository<Comment>, Repository<Comment>>();
             services.AddScoped<IAvailabilityService, AvailabilityService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();

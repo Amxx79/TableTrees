@@ -5,7 +5,6 @@
     ViewBag.Title = "Product Details";
 }
 
-
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
@@ -24,7 +23,7 @@
                     Stocks
                 </button>
                 <ul class="dropdown-menu">
-                    @foreach(var store in Model.ProductStores)
+                    @foreach (var store in Model.ProductStores)
                     {
                         <li class="dropdown-item">@store.Store.Address</li>
                     }
@@ -42,6 +41,47 @@
             <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
         }
     </div>
+</div>
+
+<hr />
+
+<div class="mt-4">
+    <h4>Comments</h4>
+    <div class="mb-3">
+        @if (Model.Comments != null && Model.Comments.Any())
+        {
+            <ul class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li class="list-group-item">
+                        <strong>@comment.ApplicationUser.UserName:</strong> @comment.CommentDescription
+                        <br />
+                        <small class="text-muted">Posted on: @comment.PostedOn.ToString("dd MMM yyyy HH:mm")</small>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        }
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Product" asp-action="AddCommentToProduct" method="post">
+            <input type="hidden" name="ProductId" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="Text" class="form-label">Add a Comment</label>
+                <textarea class="form-control" id="Text" name="Text" rows="3" placeholder="Write your comment here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    }
+    else
+    {
+        <p class="text-muted">Please <a asp-controller="Account" asp-action="Login">log in</a> to leave a comment.</p>
+    }
 </div>
 
 @section Scripts {

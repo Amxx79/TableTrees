@@ -9,12 +9,14 @@ namespace TableTree.Services.Data
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product> repository;
+        private readonly IRepository<Product> productRepository;
+        private readonly IRepository<Comment> commentRepository;
 
-        public ProductService(IRepository<Product> repository)
+		public ProductService(IRepository<Product> productRepository, IRepository<Comment>? commentRepository)
         {
-            this.repository = repository;
-        }
+            this.productRepository = productRepository;
+            this.commentRepository = commentRepository;
+		}
 
         public async Task AddProductAsync(AddProductInputModel model)
         {
@@ -28,7 +30,7 @@ namespace TableTree.Services.Data
                 CategoryId = model.Category,
             };
 
-            await this.repository.AddAsync(product);
+            await this.productRepository.AddAsync(product);
         }
 
         public async Task<bool> EditProductAsync(EditProductViewModel model)
@@ -42,8 +44,8 @@ namespace TableTree.Services.Data
             product.TreeTypeId = model.TreeType;
             product.CategoryId = model.Category;
 
-            bool result = await this.repository.UpdateAsync(product);
-            await this.repository.SaveChangesAsync();
+            bool result = await this.productRepository.UpdateAsync(product);
+            await this.productRepository.SaveChangesAsync();
             return result;
         }
 
@@ -58,14 +60,14 @@ namespace TableTree.Services.Data
             product.TreeTypeId = model.TreeType;
             product.CategoryId = model.Category;
 
-            bool result = this.repository.Update(product);
-            this.repository.SaveChanges();
+            bool result = this.productRepository.Update(product);
+            this.productRepository.SaveChanges();
             return result;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
         {
-            IEnumerable<ProductViewModel> products = await this.repository
+            IEnumerable<ProductViewModel> products = await this.productRepository
                 .GetAllAttached()
                 .Where(p => p.IsDeleted == false)
                 .AsNoTracking()
@@ -81,30 +83,29 @@ namespace TableTree.Services.Data
 
             return products;
         }
-
         public Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return this.repository.GetAllCategoriesAsync();
+            return this.productRepository.GetAllCategoriesAsync();
         }
         public IEnumerable<Category> GetAllCategories()
         {
-            return this.repository.GetAllCategories();
+            return this.productRepository.GetAllCategories();
         }
 
         public Task<IEnumerable<TreeType>> GetAllTreeTypesAsync()
         {
-            return this.repository.GetAllTreeTypesAsync();
+            return this.productRepository.GetAllTreeTypesAsync();
         }
 
         public IEnumerable<TreeType> GetAllTreeTypes()
         {
-            return this.repository.GetAllTreeTypes();
+            return this.productRepository.GetAllTreeTypes();
         }
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id)
         {
-            var product = this.repository
-                .GetAllAttached()
+            var product = this.productRepository
+				.GetAllAttached()
                 .Include(p => p.Category)
                 .Include(p => p.TreeType)
                 .Include(p => p.ProductStores.Where(ps => ps.IsDeleted == false))
@@ -127,8 +128,8 @@ namespace TableTree.Services.Data
         }
         public async Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id)
         {
-            var model = this.repository
-                .GetAllAttached()
+            var model = this.productRepository
+				.GetAllAttached()
                 .Select(p => new EditProductViewModel()
                 {
                     Id = p.Id,
@@ -148,11 +149,11 @@ namespace TableTree.Services.Data
         {
             EditProductViewModel? model = new EditProductViewModel();
 
-            model.Categories = this.repository.GetAllCategories();
-            model.TreeTypes = this.repository.GetAllTreeTypes();
+            model.Categories = this.productRepository.GetAllCategories();
+            model.TreeTypes = this.productRepository.GetAllTreeTypes();
             
-            model = this.repository
-                .GetAll()
+            model = this.productRepository
+				.GetAll()
                 .Select(p => new EditProductViewModel()
                 {
                     Id = p.Id,
@@ -170,8 +171,8 @@ namespace TableTree.Services.Data
 
         public async Task<DeleteProductViewModel> GetProductForDelete(Guid id)
         {
-            var model = this.repository
-                .GetAllAttached()
+            var model = this.productRepository
+				.GetAllAttached()
                 .Select(p => new DeleteProductViewModel()
                 {
                     Id = p.Id.ToString(),
@@ -185,25 +186,38 @@ namespace TableTree.Services.Data
 
             return model;
         }
+        public async Task AddCommentToProduct(CommentInputModel model)
+        {
+            Comment comment = new Comment()
+            {
+                Id = Guid.NewGuid(),
+                ApplicationUserId = model.ApplicationUserId,
+                CommentDescription = model.CommentDescription,
+                PostedOn = DateTime.UtcNow,
+                ProductId = model.ProductId,
+            };
+
+            await this.commentRepository.AddAsync(comment);
+        }
 
         public async Task SoftDelete(Guid id)
         {
-            var item = await this.repository
-                .GetByIdAsync(id);
+            var item = await this.productRepository
+				.GetByIdAsync(id);
 
             item.IsDeleted = true;
-            await this.repository.SaveChangesAsync();
+            await this.productRepository.SaveChangesAsync();
         }
 
         public Task<Product> GetProductByIdAsync(Guid id)
         {
-            var product = this.repository.GetByIdAsync(id);
+            var product = this.productRepository.GetByIdAsync(id);
             return product;
         }
 
         public Product GetProductById(Guid id)
         {
-            var product = this.repository.GetById(id);
+            var product = this.productRepository.GetById(id);
             return product;
         }
     }

@@ -1,11 +1,8 @@
 using Moq;
 using NUnit.Framework;
-using System.Xml.Serialization;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data;
-using TableTree.Services.Data.Interfaces;
-using TableTree.Web.ViewModels.Cart;
 using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Tests
@@ -32,7 +29,7 @@ namespace TableTree.Tests
                       Description = "Test description"
                   });
 
-            var service = new ProductService(productRepository.Object);
+            var service = new ProductService(productRepository.Object, null);
 
             var result = service.GetProductById(id);
 
@@ -50,7 +47,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetAll())
                 .Returns(productsToReturn);
 
-            var service = new ProductService(mockedRepository.Object);
+            var service = new ProductService(mockedRepository.Object, null);
 
             var result = service.GetProductForEditById(productsToReturn.First().Id);
 
@@ -75,7 +72,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetAllAttached())
                 .Returns(productsToReturn.AsQueryable());
 
-            var service = new ProductService(mockedRepository.Object);
+            var service = new ProductService(mockedRepository.Object, null);
 
             var result = await service.GetProductDetailsByIdAsync(productsToReturn.First().Id);
 
@@ -94,7 +91,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetAllAttached())
                 .Returns(productsToReturn.AsQueryable());
 
-            var service = new ProductService(mockedRepository.Object);
+            var service = new ProductService(mockedRepository.Object, null);
 
             var result = service.GetAllProductsAsync();
 
@@ -111,7 +108,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetAllCategories())
                 .Returns(categoriesToReturn);
 
-            var service = new ProductService(mockedRepository.Object);
+            var service = new ProductService(mockedRepository.Object, null);
 
             var result = service.GetAllCategories();
 
@@ -132,7 +129,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetAllAsync())
                 .ReturnsAsync(GetProductList());
 
-			var service = new ProductService(mockedRepository.Object);
+			var service = new ProductService(mockedRepository.Object, null);
 
             Web.ViewModels.Product.AddProductInputModel modelToAdd = new Web.ViewModels.Product.AddProductInputModel()
             {
@@ -160,7 +157,7 @@ namespace TableTree.Tests
             mockedRepository.Setup(repo => repo.GetById(productsToReturn.Last().Id))
                 .Returns(productsToReturn.Last());
 
-            var service = new ProductService(mockedRepository.Object);
+            var service = new ProductService(mockedRepository.Object, null);
 
             EditProductViewModel modelToEdit = new EditProductViewModel()
             {
