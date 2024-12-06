@@ -17,9 +17,9 @@ namespace TableTree.Services.Data
         private readonly ICartService cartService;
 
         public OrderService(IRepository<Order> orderRepository,
-            IRepository<TableTree.Data.Models.Product>? productRepository,
-            IRepository<OrderItemInfo>? orderItemsRepository,
-            ICartService? cartService)
+            IRepository<TableTree.Data.Models.Product> productRepository,
+            IRepository<OrderItemInfo> orderItemsRepository,
+            ICartService cartService)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
@@ -92,9 +92,11 @@ namespace TableTree.Services.Data
         {
             var orderItems = this.orderItemsRepository.GetAllAttached().Include(oi => oi.Product).Where(oi => oi.OrderId == orderId);
 
-            var productInOrder = await this.orderRepository
+            var productInOrder = this.orderRepository
                 .GetAllAttached()
-                .Where(o => o.Id == orderId)
+                .Where(o => o.Id == orderId).ToList();
+
+            var productInOrderToReturn = productInOrder
                 .Select(o => new OrderDetailsViewModel()
                 {
                     SequenceNumber = o.SequenceNumber,
@@ -110,9 +112,9 @@ namespace TableTree.Services.Data
                             TreeType = p.Product.TreeType.Name,
                             Quantity = orderItems.FirstOrDefault(oi => oi.ProductId == p.ProductId).Quantity,
                         }).ToList()
-                }).FirstAsync();
+                }).First();
 
-            return productInOrder;
+            return productInOrderToReturn;
         }
 
         public int GetLatestSequenceNumberAsync()
