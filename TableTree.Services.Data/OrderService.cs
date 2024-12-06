@@ -17,9 +17,9 @@ namespace TableTree.Services.Data
         private readonly ICartService cartService;
 
         public OrderService(IRepository<Order> orderRepository,
-            IRepository<TableTree.Data.Models.Product> productRepository,
-            IRepository<OrderItemInfo> orderItemsRepository,
-            ICartService cartService)
+            IRepository<TableTree.Data.Models.Product>? productRepository,
+            IRepository<OrderItemInfo>? orderItemsRepository,
+            ICartService? cartService)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;

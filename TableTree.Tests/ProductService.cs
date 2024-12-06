@@ -16,7 +16,7 @@ namespace TableTree.Tests
         }
 
         [Test]
-        public async Task ProductServiceReturnsObject()
+        public async Task ProductServiceReturns_Object()
         {
             var productRepository = new Mock<IRepository<Data.Models.Product>>();
             var id = Guid.NewGuid();
