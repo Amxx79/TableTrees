@@ -191,18 +191,22 @@ namespace TableTree.Services.Data
         }
         public async Task AddCommentToProduct(CommentInputModel model)
         {
-            Comment comment = new Comment()
-            {
-                Id = Guid.NewGuid(),
-                ApplicationUserId = model.ApplicationUserId,
-                ApplicationUser = model.ApplicationUser,
-                CommentDescription = model.CommentDescription,
-                PostedOn = DateTime.Now,
-                ProductId = model.ProductId,
-                Product = model.Product,
-            };
+            var allComents = await commentRepository.GetAllAsync();
 
-            await this.commentRepository.AddAsync(comment);
+            var applicationUser = model.ApplicationUser;
+
+			Comment comment = new Comment()
+			{
+				Id = Guid.NewGuid(),
+				ApplicationUserId = model.ApplicationUserId,
+				ApplicationUser = model.ApplicationUser,
+				CommentDescription = model.CommentDescription,
+				PostedOn = DateTime.Now,
+				ProductId = model.ProductId,
+				Product = model.Product,
+			};
+
+			await this.commentRepository.AddAsync(comment);
         }
 
         public async Task SoftDelete(Guid id)

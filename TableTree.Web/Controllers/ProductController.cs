@@ -139,20 +139,21 @@ namespace TableTree.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 			ApplicationUser user = await userManager.FindByIdAsync(userId);
+
             Product product = await this.productService.GetProductByIdAsync(productId);
 
-            CommentInputModel model = new CommentInputModel()
-            {
-                ApplicationUserId = Guid.Parse(userId),
-                ApplicationUser = user,
-                CommentDescription = text,
-                ProductId = productId,
-                Product = product,
-            };
+			CommentInputModel model = new CommentInputModel()
+			{
+				ApplicationUserId = Guid.Parse(userId),
+				ApplicationUser = user,
+				CommentDescription = text,
+				ProductId = productId,
+				Product = product,
+			};
 
-            await this.productService.AddCommentToProduct(model);
+			await this.productService.AddCommentToProduct(model);
 
 			return this.RedirectToAction("Details", new { id = product.Id });
 		}
-    }
+	}
 }

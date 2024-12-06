@@ -90,32 +90,30 @@ namespace TableTree.Services.Data
 
         public async Task<OrderDetailsViewModel> GetDetailsOfOrder(Guid orderId)
         {
-            var orderItems = this.orderItemsRepository.GetAllAttached().Include(oi => oi.Product).Where(oi => oi.OrderId == orderId);
+			var orderItems = this.orderItemsRepository.GetAllAttached().Include(oi => oi.Product).Where(oi => oi.OrderId == orderId);
 
-            var productInOrder = this.orderRepository
-                .GetAllAttached()
-                .Where(o => o.Id == orderId).ToList();
+			var productInOrder = this.orderRepository
+				.GetAllAttached()
+				.Where(o => o.Id == orderId)
+				.Select(o => new OrderDetailsViewModel()
+				{
+					SequenceNumber = o.SequenceNumber,
+					OrderDate = o.OrderDate,
+					TotalPrice = o.TotalPrice,
+					ProductsInOrder = o.Items
+						.Select(p => new ProductViewModel()
+						{
+							Id = p.Id,
+							Name = p.Product.Name,
+							Price = p.Product.Price,
+							ImageUrl = p.Product.ImageUrl,
+							TreeType = p.Product.TreeType.Name,
+							Quantity = orderItems.FirstOrDefault(oi => oi.ProductId == p.ProductId).Quantity,
+						}).ToList()
+				}).First();
 
-            var productInOrderToReturn = productInOrder
-                .Select(o => new OrderDetailsViewModel()
-                {
-                    SequenceNumber = o.SequenceNumber,
-                    OrderDate = o.OrderDate,
-                    TotalPrice = o.TotalPrice,
-                    ProductsInOrder = o.Items
-                        .Select(p => new ProductViewModel()
-                        {
-                            Id = p.Id,
-                            Name = p.Product.Name,
-                            Price = p.Product.Price,
-                            ImageUrl = p.Product.ImageUrl,
-                            TreeType = p.Product.TreeType.Name,
-                            Quantity = orderItems.FirstOrDefault(oi => oi.ProductId == p.ProductId).Quantity,
-                        }).ToList()
-                }).First();
-
-            return productInOrderToReturn;
-        }
+			return productInOrder;
+		}
 
         public int GetLatestSequenceNumberAsync()
         {

@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
 using NUnit.Framework;
 using TableTree.Data.Models;
 using TableTree.Data.Repository.Interfaces;
@@ -113,7 +114,6 @@ namespace TableTree.Services.Data.Testting
             Assert.That(result.SequenceNumber, Is.EqualTo(1));
             Assert.That(result.TotalPrice, Is.EqualTo(999));
         }
-
 
         private List<Order> GetAllOrders()
         {
