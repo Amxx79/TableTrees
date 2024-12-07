@@ -21,7 +21,7 @@ namespace TableTree.Services.Data
             this.productRepository = productRepository;
         }
 
-        public async Task AddProductAsync(string productId, string userId)
+        public virtual async Task AddProductAsync(string productId, string userId)
         {
             var productIdentificator = Guid.Parse(productId);
             var userIdentificator = Guid.Parse(userId);
