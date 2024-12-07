@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using TableTree.Data.Models;
+using TableTree.Data.Repository.Interfaces;
 using TableTree.Web.Controllers;
 using TableTree.Web.ViewModels.Favourite;
 
@@ -18,7 +19,7 @@ namespace TableTree.Services.Data.Testting
 		[Test]
 		public async Task FavouriteServiceReturns_GetAllInFavourites()
 		{
-			var mockedService = new Mock<Data.Interfaces.IFavouriteService>();
+			var mockedService = new Mock<Data.FavouriteService>();
 
 			mockedService.Setup(s => s.GetAllProductsInFavouritesAsync())
 				.ReturnsAsync(GetFavouriteProductsToReturnsAsProductViewModel().Result.AsEnumerable());

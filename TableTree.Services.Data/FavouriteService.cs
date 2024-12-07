@@ -11,6 +11,10 @@ namespace TableTree.Services.Data
         private readonly IRepository<FavouriteProduct> favouriteProductRepository;
         private readonly IRepository<Product> productRepository;
 
+        public FavouriteService()
+        {
+        }
+
         public FavouriteService(IRepository<FavouriteProduct> favouriteProductrepository, IRepository<Product> productRepository)
         {
             this.favouriteProductRepository = favouriteProductrepository;
@@ -42,7 +46,7 @@ namespace TableTree.Services.Data
             }
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllProductsInFavouritesAsync()
+        public virtual async Task<IEnumerable<ProductViewModel>> GetAllProductsInFavouritesAsync()
         {
             IEnumerable<ProductViewModel> model = await this.favouriteProductRepository
                 .GetAllAttached()
