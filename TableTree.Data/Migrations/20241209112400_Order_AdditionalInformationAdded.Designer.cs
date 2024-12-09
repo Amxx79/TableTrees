@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209112400_Order_AdditionalInformationAdded")]
+    partial class Order_AdditionalInformationAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,20 +307,8 @@ namespace TableTree.Data.Migrations
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SequenceNumber")
                         .HasColumnType("int");
@@ -330,6 +321,10 @@ namespace TableTree.Data.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -403,7 +398,7 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9d1050df-82ba-4d99-b0f1-5935ecedd1c0"),
+                            Id = new Guid("5135c368-2d1d-47a7-9e83-b021607bd0e2"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
                             ImageUrl = "/images/table-1.jpeg",
@@ -414,7 +409,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("16d6f412-614f-404c-878d-aadc46fcec35"),
+                            Id = new Guid("d1a89b10-7f44-4c0c-8846-38655978f609"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-2.jpeg",
@@ -425,7 +420,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9f07c23a-f6bc-4618-86f9-f34f1eb08735"),
+                            Id = new Guid("697cf07f-6c5b-42e8-bf5a-8407a39e34b3"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-3.jpg",
@@ -436,7 +431,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0e1e00b1-cd72-4b5b-9916-3c1d2dc05350"),
+                            Id = new Guid("818596f8-648d-4468-b813-f4f5718a122e"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
                             ImageUrl = "/images/table-4.jpeg",
@@ -447,7 +442,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e5cb26d0-e57b-471d-826d-b0c707b5b1ad"),
+                            Id = new Guid("29d7e3df-2626-4ba7-bbd7-bce1772b85c2"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                             ImageUrl = "/images/table-5.jpeg",

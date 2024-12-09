@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Cart;
@@ -27,25 +28,42 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToOrders(IEnumerable<ViewModels.Order.ProductViewModel> products)
+        public async Task<IActionResult> GetInformation(IEnumerable<ViewModels.Order.ProductViewModel> products)
+		{
+			var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
+
+			OrderViewModel orderr = new OrderViewModel()
+			{
+				UserId = user,
+				OrderDate = DateTime.Now.ToString(),
+				SequenceNumber = highestOrderSequenceNumber + 1,
+				TotalPrice = products.Sum(p => p.Price * p.Quantity).ToString(),
+				Products = products,
+			};
+
+            TempData["Products"] = JsonConvert.SerializeObject(orderr.Products);
+			return this.View("OrderInformation", orderr);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToOrders(OrderViewModel model)
         {
-            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+			int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
 
+            var products = JsonConvert.DeserializeObject<IEnumerable<ViewModels.Order.ProductViewModel>>(TempData["Products"].ToString());
 
-            int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
+            model.UserId = user;
+            model.OrderDate = DateTime.Now.ToString();
+			model.SequenceNumber = highestOrderSequenceNumber + 1;
+            model.TotalPrice = products.Sum(p => p.Price * p.Quantity).ToString();
+			model.Products = products;
 
-            OrderViewModel orderr = new OrderViewModel()
-            {
-                UserId = user,
-                OrderDate = DateTime.Now.ToString(),
-                SequenceNumber = highestOrderSequenceNumber + 1,
-                TotalPrice = products.Sum(p => p.Price * p.Quantity).ToString(),
-                Products = products,
-            };
-
-            await this.orderService
-                .AddToOrders(orderr);
+			await this.orderService
+                .AddToOrders(model);
 
             return this.RedirectToAction(nameof(Index));
         }

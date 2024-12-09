@@ -1,0 +1,60 @@
+﻿@using TableTree.Web.ViewModels.Order
+@model OrderViewModel
+
+<h2 class="text-center my-4">Checkout</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="AddToOrders" method="post">
+                        <div class="mb-3">
+                            <label asp-for="FirstName" class="form-label">First Name</label>
+                            <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label">Last Name</label>
+                            <input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Enter your phone number" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Delivery Method</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="DeliveryMethod" id="econtOffice" value="EcontOffice" />
+                                <label class="form-check-label" for="econtOffice">Econt Office</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="DeliveryMethod" id="speedyOffice" value="SpeedyOffice" />
+                                <label class="form-check-label" for="speedyOffice">Speedy Office</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="DeliveryMethod" id="homeAddress" value="HomeAddress" />
+                                <label class="form-check-label" for="homeAddress">Home Address</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ShippingCity" class="form-label">Shipping City</label>
+                            <input asp-for="ShippingCity" class="form-control" placeholder="Enter your shipping city" />
+                            <span asp-validation-for="ShippingCity" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ShippingAddress" class="form-label">Shipping Address</label>
+                            <textarea asp-for="ShippingAddress" class="form-control" rows="3" placeholder="Enter your shipping address"></textarea>
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Confirm Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

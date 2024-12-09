@@ -3,8 +3,13 @@
     public class Order
     {
         public Guid Id { get; set; }
-        public int SequenceNumber { get; set; }
-        public Guid ApplicationUserId { get; set; }
+		public string FirstName { get; set; } //NEW
+		public string LastName { get; set; } //NEW
+		public string PhoneNumber { get; set; } //NEW
+		public int SequenceNumber { get; set; }
+		public string? ShippingCity { get; set; } //NEW
+		public string? ShippingAddress { get; set; } //NEW
+		public Guid ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }

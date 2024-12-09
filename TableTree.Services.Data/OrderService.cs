@@ -47,6 +47,11 @@ namespace TableTree.Services.Data
             {
                 SequenceNumber = order.SequenceNumber,
                 ApplicationUserId = Guid.Parse(order.UserId),
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                PhoneNumber = order.PhoneNumber,
+                ShippingCity = order.ShippingCity,
+                ShippingAddress = order.ShippingAddress,
                 TotalPrice = Decimal.Parse(order.TotalPrice),
                 OrderDate = DateTime.Parse(order.OrderDate),
             };
