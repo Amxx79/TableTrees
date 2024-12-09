@@ -1,11 +1,19 @@
 ﻿@using TableTree.Web.ViewModels.Order
 @model OrderDetailsViewModel
+<link rel="stylesheet" href="~/css/OrderDetails.css" />
 
 <div class="order-details">
     <h2>Order Details</h2>
-    <p><strong>Order Number:</strong> @Model.SequenceNumber</p>
-    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("g")</p>
-    <p><strong>Total Price:</strong> @Model.TotalPrice.ToString("C")</p>
+    <div class="details-grid">
+        <div><strong>Order Number:</strong> @Model.SequenceNumber</div>
+        <div><strong>Order Date:</strong> @Model.OrderDate.ToString("g")</div>
+        <div><strong>First Name:</strong> @Model.FirstName.ToString()</div>
+        <div><strong>Last Name:</strong> @Model.LastName.ToString()</div>
+        <div><strong>Phone Number:</strong> @Model.PhoneNumber.ToString()</div>
+        <div><strong>City:</strong> @Model.ShippingCity.ToString()</div>
+        <div><strong>Address:</strong> @Model.ShippingAddress.ToString()</div>
+        <div><strong>Total Price:</strong> @Model.TotalPrice.ToString("C")</div>
+    </div>
     <hr />
     <h3>Products</h3>
     <table class="table">

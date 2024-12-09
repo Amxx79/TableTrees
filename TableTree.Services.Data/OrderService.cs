@@ -104,6 +104,11 @@ namespace TableTree.Services.Data
 				{
 					SequenceNumber = o.SequenceNumber,
 					OrderDate = o.OrderDate,
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    ShippingCity = o.ShippingCity,
+                    ShippingAddress = o.ShippingAddress,
+                    PhoneNumber = o.PhoneNumber,
 					TotalPrice = o.TotalPrice,
 					ProductsInOrder = o.Items
 						.Select(p => new ProductViewModel()
