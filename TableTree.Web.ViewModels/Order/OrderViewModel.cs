@@ -8,6 +8,7 @@
 		public string PhoneNumber { get; set; } //NEW
 		public string? ShippingCity { get; set; } //NEW
 		public string? ShippingAddress { get; set; } //NEW
+		public string DeliveryMethod { get; set; } // NEW
 		public string OrderId { get; set; }
         public int SequenceNumber { get; set; }
         public string OrderDate { get; set; }

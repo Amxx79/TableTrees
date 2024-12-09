@@ -6,6 +6,7 @@
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string PhoneNumber { get; set; }
+		public string DeliveryMethod { get; set; }
 		public string ShippingCity { get; set; }
 		public string ShippingAddress { get; set; }
 		public int SequenceNumber { get; set; }

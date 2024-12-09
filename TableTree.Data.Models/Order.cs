@@ -7,6 +7,7 @@
 		public string LastName { get; set; } //NEW
 		public string PhoneNumber { get; set; } //NEW
 		public int SequenceNumber { get; set; }
+		public string DeliveryMethod { get; set; } // NEW
 		public string? ShippingCity { get; set; } //NEW
 		public string? ShippingAddress { get; set; } //NEW
 		public Guid ApplicationUserId { get; set; }
