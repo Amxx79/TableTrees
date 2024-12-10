@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsot.Extensions.DependencyInjection;
 using TableTree.Data.Models;
 using TableTree.Services.Data;
@@ -24,7 +25,10 @@ namespace TableTree.Web
 
             builder.Services.AddMvc();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             var app = builder.Build();
 
