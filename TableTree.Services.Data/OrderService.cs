@@ -6,6 +6,7 @@ using TableTree.Data.Repository.Interfaces;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.ViewModels.Order;
 using static TableTree.Common.EntityValidationContants;
+using Order = TableTree.Data.Models.Order;
 
 namespace TableTree.Services.Data
 {

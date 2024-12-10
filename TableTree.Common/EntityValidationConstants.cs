@@ -22,5 +22,23 @@
             public const int NameMaxLength = 30;
             public const int NameMinLength = 3;
         }
+
+        public static class Order
+        {
+            public const int FistNameMinLength = 0;
+            public const int FirstNameMaxLength = 50;
+
+            public const int LastNameMinLength = 0;
+            public const int LastNameMaxLength = 50;
+
+            public const int PhoneNumberMinLength = 7;
+            public const int PhoneNumberMaxLength = 15;
+
+            public const int ShippingCityMinLength = 5;
+            public const int ShippingCityMaxLength = 30;
+
+            public const int ShippingAddressMinLength = 1;
+            public const int ShippingAddressMaxLength = 100;
+        }
     }
 }
