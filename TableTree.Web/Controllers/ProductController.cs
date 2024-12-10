@@ -81,6 +81,10 @@ namespace TableTree.Web.Controllers
             var model = this.productService
                 .GetProductForEditById(guid);
 
+            if (model == null)
+            {
+                return this.BadRequest();
+            }
 
             model.Categories = this.productService.GetAllCategories();
             model.TreeTypes = this.productService.GetAllTreeTypes();
