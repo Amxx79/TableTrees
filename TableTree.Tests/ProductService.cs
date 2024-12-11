@@ -93,7 +93,7 @@ namespace TableTree.Tests
 
             var service = new ProductService(mockedRepository.Object, null);
 
-            var result = service.GetAllProductsAsync();
+            var result = service.GetAllProductsAsync(new AllProductsSearchFilterViewModel());
 
             Assert.That(result, Is.Not.Null);
         }

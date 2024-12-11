@@ -26,10 +26,11 @@ namespace TableTree.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(AllProductsSearchFilterViewModel filters)
         {
-            var model = await productService.GetAllProductsAsync();
-            return View(model);
+            var model = await productService.GetAllProductsAsync(filters);
+
+            return View("Index", model);
         }
 
         [HttpGet]

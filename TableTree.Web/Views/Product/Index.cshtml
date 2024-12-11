@@ -1,5 +1,5 @@
 ﻿@using TableTree.Web.ViewModels.Product;
-@model IEnumerable<ProductViewModel>;
+@model AllProductsSearchFilterViewModel;
 
 @{
     ViewBag.Title = "All Products";
@@ -7,87 +7,117 @@
 
 <link rel="stylesheet" href="~/css/products.css">
 
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="row">
+        <div class="col">
+            <select asp-for="TypeOfTree" class="form-control" placeholder="Filter by type of tree...">
+                <option value="" disabled selected>Filter by Type of tree...</option>
+                <option value="">All</option>
+                @foreach (var treetype in Model.AllTypeOfTrees)
+                {
+                    <option value="@treetype.Name">@treetype.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <select asp-for="Category" class="form-control" placeholder="Filter by Category...">
+                <option value="" disabled selected>Filter by Category</option>
+                <option value="">All</option>
+                @foreach (var category in Model.AllCategories)
+                {
+                    <option value="@category.Name">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
 <div class="container mt-5">
     <h2 class="text-center text-primary mb-4">@ViewBag.Title</h2>
     <div class="row g-4">
-        @foreach (var product in Model)
+        @if (@Model.Products != null) 
         {
-            <div class="col-md-6 col-lg-4 col-xl-3" >
-                <div class="card shadow-sm h-100" >
-                    @if (!string.IsNullOrEmpty(product.ImageUrl))
-                    {
-                        <img src="@product.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@product.Name">
-                    }
-                    else
-                    {
-                        <img src="~/img/PH.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Placeholder">
-                    }
-
-                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title text-dark">@product.Name</h5>
-                        <p class="card-text text-muted mb-1">Type: <strong>@product.TreeType</strong></p>
-                        <p class="card-text text-success fw-bold mb-2">
-                            Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("bg-BG"))
-                        </p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@product.Id" method="post">
-                                        <input type="hidden" name="productId" value="@product.Id">
-                                        <button type="submit" style="background: none; border: none; cursor: pointer;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="svg bi bi-star-fill" viewBox="0 0 16 16">
-                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                            </svg>
-                                    </form>
-                                }
-                            </div>
-                    </div>
-                    <div class="row gx-2">
-                        @if(User.Identity.IsAuthenticated) 
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-md-6 col-lg-4 col-xl-3" >
+                    <div class="card shadow-sm h-100" >
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
                         {
-                            <div class="col-6">
-                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                                    class="btn btn-primary btn-sm w-100">Details</a>
-                            </div>
-                            <div class="col-6">
-                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center">
-                                    <input type="number" name="quantity" id="quantity" value="1" min="1" max="9999" step="1" class="form-control form-control-sm me-1" style="width: 4rem;" />
-                                    <input type="hidden" name="id" value="@product.Id" />
-                                    <button type="submit" class="btn btn-success btn-sm">Buy</button>
-                                </form>
-                            </div>
+                            <img src="@product.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@product.Name">
                         }
                         else
                         {
-                            <div class="col-12">
-                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                                    class="btn btn-primary btn-sm w-100">Details</a>
-                            </div>
+                            <img src="~/img/PH.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Placeholder">
                         }
 
-                    </div>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <div class="row gx-2 mt-2">
-                            <div class="col-6">
-                                <form asp-controller="Product" asp-action="AddProductToStore" method="get">
-                                    <input type="hidden" name="productId" value="@product.Id"/>
-                                    <button class="btn btn-warning btn-sm w-100">Add to Store</button>
-                                </form>
-                            </div>
-                            @if (User.IsInRole("GlobalAdmin"))
+                         <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-dark">@product.Name</h5>
+                            <p class="card-text text-muted mb-1">Type: <strong>@product.TreeType</strong></p>
+                            <p class="card-text text-success fw-bold mb-2">
+                                Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("bg-BG"))
+                            </p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@product.Id" method="post">
+                                            <input type="hidden" name="productId" value="@product.Id">
+                                            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="svg bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                </svg>
+                                        </form>
+                                    }
+                                </div>
+                        </div>
+                        <div class="row gx-2">
+                            @if(User.Identity.IsAuthenticated) 
                             {
                                 <div class="col-6">
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
-                                        class="btn btn-danger btn-sm w-100">Delete</a>
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                                        class="btn btn-primary btn-sm w-100">Details</a>
+                                </div>
+                                <div class="col-6">
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center">
+                                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="9999" step="1" class="form-control form-control-sm me-1" style="width: 4rem;" />
+                                        <input type="hidden" name="id" value="@product.Id" />
+                                        <button type="submit" class="btn btn-success btn-sm">Buy</button>
+                                    </form>
                                 </div>
                             }
+                            else
+                            {
+                                <div class="col-12">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                                        class="btn btn-primary btn-sm w-100">Details</a>
+                                </div>
+                            }
+
                         </div>
-                    }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="row gx-2 mt-2">
+                                <div class="col-6">
+                                    <form asp-controller="Product" asp-action="AddProductToStore" method="get">
+                                        <input type="hidden" name="productId" value="@product.Id"/>
+                                        <button class="btn btn-warning btn-sm w-100">Add to Store</button>
+                                    </form>
+                                </div>
+                                @if (User.IsInRole("GlobalAdmin"))
+                                {
+                                    <div class="col-6">
+                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                                            class="btn btn-danger btn-sm w-100">Delete</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>

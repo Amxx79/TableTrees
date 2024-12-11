@@ -65,23 +65,40 @@ namespace TableTree.Services.Data
             return result;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
+        public async Task<AllProductsSearchFilterViewModel> GetAllProductsAsync(AllProductsSearchFilterViewModel? filters)
         {
-            IEnumerable<ProductViewModel> products = await this.productRepository
-                .GetAllAttached()
-                .Where(p => p.IsDeleted == false)
-                .AsNoTracking()
-                .Select(p => new ProductViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl,
-                    TreeType = p.TreeType.Name,
-                })
-                .ToListAsync();
+            var products = this.productRepository
+                    .GetAllAttached();
 
-            return products;
+            if (!String.IsNullOrWhiteSpace(filters.TypeOfTree))
+            {
+                products = products.Where(p => p.TreeType.Name== filters.TypeOfTree);
+            }
+
+            if (!String.IsNullOrWhiteSpace(filters.Category))
+            {
+                products = products.Where(p => p.Category.Name == filters.Category);
+            }
+
+            AllProductsSearchFilterViewModel model = new AllProductsSearchFilterViewModel()
+            {
+                AllCategories = await this.GetAllCategoriesAsync(),
+                AllTypeOfTrees = await this.GetAllTreeTypesAsync(),
+                Products = await products
+                    .Where(p => p.IsDeleted == false)
+                    .Select(p => new ProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl,
+                        TreeType = p.TreeType.Name,
+                    })
+                    .ToListAsync()
+            };
+
+
+            return model;
         }
         public Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {

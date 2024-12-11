@@ -3,6 +3,7 @@ using System.Diagnostics;
 using TableTree.Services.Data;
 using TableTree.Services.Data.Interfaces;
 using TableTree.Web.Models;
+using TableTree.Web.ViewModels.Product;
 
 namespace TableTree.Web.Controllers
 {
@@ -19,7 +20,7 @@ namespace TableTree.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await productService.GetAllProductsAsync();
+            var model = await productService.GetAllProductsAsync(new AllProductsSearchFilterViewModel());
             return View(model);
         }
 
