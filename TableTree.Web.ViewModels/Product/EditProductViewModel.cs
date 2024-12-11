@@ -16,6 +16,7 @@ namespace TableTree.Web.ViewModels.Product
         [MinLength(DescriptionMinLength, ErrorMessage = "Minimum length is {1}")]
         [MaxLength(DescriptionMaxLength, ErrorMessage = "Minimum length is {1}")]
         public string Description { get; set; }
+        [Required]
         public decimal Price { get; set; }
         public string? ImageUrl { get; set; }
         public Guid TreeType { get; set; }

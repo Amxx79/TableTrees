@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TableTree.Data;
 
@@ -11,9 +12,11 @@ using TableTree.Data;
 namespace TableTree.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211200756_Products_DataSeeding")]
+    partial class Products_DataSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -407,7 +410,7 @@ namespace TableTree.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("675feb25-3411-4a3f-8a47-ca18046311e2"),
+                            Id = new Guid("2de3a6b8-7891-49c6-96ee-10a3b73d2f48"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A sturdy coffee table made from reclaimed pine with a rich, warm finish. Eco-friendly and unique, it brings warmth to any room.",
                             ImageUrl = "/images/table-1.jpeg",
@@ -418,19 +421,19 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("66679643-3e50-408c-a4c2-b3516bed03d5"),
+                            Id = new Guid("393006f7-9c37-4f7d-80c4-1db8c4ae7569"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-2.jpeg",
                             IsDeleted = false,
                             Name = "Eris Hackberry Blue Epoxy Resin Table",
-                            Price = 1599.00m,
+                            Price = 4800.00m,
                             TreeTypeId = new Guid("133a6af3-1b7d-4d6e-aa41-33be63184766")
                         },
                         new
                         {
-                            Id = new Guid("5d74b7ad-5712-43fe-9924-d2a05787df91"),
-                            CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
+                            Id = new Guid("b29522fe-0ea0-4a01-9513-ab5d9cab230b"),
+                            CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "A unique epoxy resin table made from an olive tree. This coffee table was cast with turquoise semi-transparent epoxy resin and a touch of metallic powder, creating a beautiful turquoise water look. The fashionable stainless steel spider table frame completes the overall look of this coffee table.",
                             ImageUrl = "/images/table-3.jpg",
                             IsDeleted = false,
@@ -440,7 +443,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ed41050e-3252-4923-b9b1-efebf5cbd074"),
+                            Id = new Guid("cc1f88fd-382d-4003-85e9-2d831d87406b"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "Beautiful table featuring a blue resin river down the center, crafted from black walnut wood. Ideal for dining rooms.",
                             ImageUrl = "/images/table-4.jpeg",
@@ -451,7 +454,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e0a16436-c246-449a-a0e2-dc47bb4da30d"),
+                            Id = new Guid("47ac7201-236d-42b2-91bd-b3f57d0bf77e"),
                             CategoryId = new Guid("a1042fee-f95a-4bf3-a758-49b13cff3e79"),
                             Description = "A handcrafted table made from live-edge oak, showcasing natural wood grain and organic shape. Perfect as a centerpiece in any living space.",
                             ImageUrl = "/images/table-5.jpeg",
@@ -462,10 +465,10 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c0a722b7-8d1b-4416-9519-4b111dc2df07"),
+                            Id = new Guid("8bbd0d28-418d-40dc-b311-f254c29c1165"),
                             CategoryId = new Guid("6acd5822-a59e-4427-b8ac-fbca0751cd98"),
                             Description = "Adorn your living space with our exquisite Epoxy and Olive Wood Decorative Bathroom Mirror – a fusion of artistry and practicality that transcends ordinary decor. Crafted with meticulous attention to detail, this handmade masterpiece is more than just a mirror",
-                            ImageUrl = "/images/mirror-1.jpeg",
+                            ImageUrl = "/images/mirror-1.jpg",
                             IsDeleted = false,
                             Name = "Custom Epoxy and Olive Wood Decorative Mirror",
                             Price = 99.99m,
@@ -473,7 +476,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fce555f2-c912-42ec-a863-aaa9119cf6ca"),
+                            Id = new Guid("6cfa25f3-22a1-472d-89f2-e1d90fa124ef"),
                             CategoryId = new Guid("6acd5822-a59e-4427-b8ac-fbca0751cd98"),
                             Description = "This special design, crafted from olive wood, has been meticulously prepared, preserving the natural edge and bark of the wood. The cracks have been filled with special epoxy, and a custom matte varnish has been applied to the wood surface to provide resistance against scratches without losing its natural texture",
                             ImageUrl = "/images/mirror-2.jpg",
@@ -484,7 +487,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5ed7fb89-1318-4f22-a999-3aa1f2860235"),
+                            Id = new Guid("db8be300-48be-4da7-85cd-3402c40882be"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "Elevate your bathroom with our handcrafted wooden countertop, made from sustainably sourced oak. Each piece is carefully treated for durability, offering a unique blend of natural beauty and modern functionality to complement any decor style.",
                             ImageUrl = "/images/bathroom-countertop-1.jpg",
@@ -495,7 +498,7 @@ namespace TableTree.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d01a0293-99df-4f20-adad-ca3be3b70ab8"),
+                            Id = new Guid("e45a4684-87bc-49f4-846d-79c569a8520b"),
                             CategoryId = new Guid("61bc3294-73ca-441b-9b53-0d4f26b673f3"),
                             Description = "Transform your bathroom with this set of boutique natural wood countertops, expertly crafted from premium, sustainably sourced wood.",
                             ImageUrl = "/images/bathroom-countertop-2.jpg",
