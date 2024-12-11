@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using TableTree.Data;
 using TableTree.Data.Models;
 using TableTree.Data.Repository;
@@ -15,7 +14,7 @@ using TableTree.Services.Data.Interfaces;
 
 namespace Microsot.Extensions.DependencyInjection
 {
-	public static class IDServiceCollectionExtension
+    public static class IDServiceCollectionExtension
     {
         public static IServiceCollection AddApplicationDatabase(this IServiceCollection services, IConfiguration config)
         {

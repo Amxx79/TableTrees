@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TableTree.Web.ViewModels.Order
+﻿namespace TableTree.Web.ViewModels.Order
 {
     public class OrderDetailsViewModel
     {
