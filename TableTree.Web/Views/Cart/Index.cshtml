@@ -32,18 +32,19 @@
             <div class="cart-price col-md-1 text-start">
                 <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("bg-BG"))</h5>
             </div>
-            <div class="cart-quantity-input col-md-1 text-start">
+            <div class="cart-quantity col-md-1 text-start">
                 <label>Quantity: <div> @product.Quantity</div></label>
             </div>
             <div class="col-2">
-                <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                    <input style="width:2.5em" type="number" value="@product.Quantity" name="quantity" id="quantity" size="4" max="9999" min="1" value="1" step="1"></input>
-                    <input type="hidden" name="id" value="@product.Id" />
-                    <button type="submit" class="btn btn-sm mb-2 w-50 fw-bold rounded btn-primary">Update</button>
+            <form class="justify-content-center" id="form" asp-controller="Cart" asp-action="AddToCart" method="post">
+                <div class="row justify-content-center">
+                    <input class="cart-quantity-input" style="width:7em" type="number" value="@product.Quantity" name="quantity" id="quantity" size="4" max="9999" min="1" value="1" step="1"></input>
+                    <input id="productId" type="hidden" name="id" value="@product.Id" />
+                </div>
                 </form>
             </div>
             <div class="col-md-1 text-start">
-                <label>Total: @((product.Price * product.Quantity).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR")))</label>
+                <label id="totalAmountPerProduct">Total: @((product.Price * product.Quantity).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR")))</label>
             </div>
             <div class="col-md-2 text-end">
                 <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
@@ -55,7 +56,7 @@
 }
 
 <div class="total-price-container text-end">
-    <h4 class="cart-total-price">Total Amount: @totalAmount.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h4>
+    <h4 id="totalAmount" class="cart-total-price">Total Amount: @totalAmount.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h4>
     <form asp-controller="Order" asp-action="GetInformation" method="post">
         @for (int i = 0; i < Model.Count; i++)
         {
