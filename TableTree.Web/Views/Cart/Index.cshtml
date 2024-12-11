@@ -1,5 +1,6 @@
 ﻿@using TableTree.Web.ViewModels.Cart
 @model List<ProductViewModel>
+<script src="~/js/site.js" async></script>
 
 @{
     ViewData["Title"] = "Cart";
@@ -14,7 +15,7 @@
 @foreach (var product in Model)
 {
     totalAmount += product.Price * product.Quantity;
-        <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
+        <div class="cart-row row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
             <div class="col-md-2 text-center">
             @if (!string.IsNullOrEmpty(product.ImageUrl))
             {
@@ -28,10 +29,10 @@
             <div class="col-md-2 text-start">
                 <h5 class="mb-0">@product.Name</h5>
             </div>
-            <div class="col-md-1 text-start">
-                <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
+            <div class="cart-price col-md-1 text-start">
+                <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("bg-BG"))</h5>
             </div>
-            <div class="col-md-1 text-start">
+            <div class="cart-quantity-input col-md-1 text-start">
                 <label>Quantity: <div> @product.Quantity</div></label>
             </div>
             <div class="col-2">
@@ -53,8 +54,8 @@
         </div>
 }
 
-<div class="text-end">
-    <h4>Total Amount: @totalAmount.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h4>
+<div class="total-price-container text-end">
+    <h4 class="cart-total-price">Total Amount: @totalAmount.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h4>
     <form asp-controller="Order" asp-action="GetInformation" method="post">
         @for (int i = 0; i < Model.Count; i++)
         {
