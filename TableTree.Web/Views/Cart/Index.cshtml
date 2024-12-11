@@ -5,6 +5,8 @@
 @{
     ViewData["Title"] = "Cart";
     decimal totalAmount = 0;
+    bool hasProducts = Model.Count() > 0 ? true : false;
+
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
@@ -68,6 +70,8 @@
                 <input type="hidden" name="products[@i].TreeType" value="@Model[i].TreeType" />
                 <input type="hidden" name="products[@i].Quantity" value="@Model[i].Quantity" />
         }
-        <button type="submit" class="btn btn-success">Buy</button>
+        @if (hasProducts) {
+            <button type="submit" class="btn btn-success">Buy</button>
+        }
     </form>
 </div>

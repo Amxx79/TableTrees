@@ -34,7 +34,7 @@ namespace TableTree.Web.Controllers
 
 			int highestOrderSequenceNumber = this.orderService.GetLatestSequenceNumberAsync();
 
-			OrderViewModel orderr = new OrderViewModel()
+			OrderViewModel order = new OrderViewModel()
 			{
 				UserId = user,
 				OrderDate = DateTime.Now.ToString(),
@@ -43,8 +43,8 @@ namespace TableTree.Web.Controllers
 				Products = products,
 			};
 
-            TempData["Products"] = JsonConvert.SerializeObject(orderr.Products);
-			return this.View("OrderInformation", orderr);
+            TempData["Products"] = JsonConvert.SerializeObject(order.Products);
+			return this.View("OrderInformation", order);
         }
 
         [HttpPost]
