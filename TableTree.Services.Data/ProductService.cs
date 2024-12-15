@@ -122,7 +122,7 @@ namespace TableTree.Services.Data
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id)
         {
             var product = this.productRepository
-				.GetAllAttached()
+                .GetAllAttached()
                 .Include(p => p.Category)
                 .Include(p => p.TreeType)
                 .Include(p => p.Comments)
@@ -131,19 +131,22 @@ namespace TableTree.Services.Data
                 .ThenInclude(ps => ps.Store)
                 .FirstOrDefault(p => p.Id == id);
 
-            ProductDetailsViewModel model = new ProductDetailsViewModel()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                ImageUrl = product.ImageUrl,
-                Category = product.Category,
-                TreeType = product.TreeType,
-                ProductStores = product.ProductStores,
-                Comments = product.Comments,
-            };
+            ProductDetailsViewModel model = null;
 
+            if (product != null) {
+                model = new ProductDetailsViewModel()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    ImageUrl = product.ImageUrl,
+                    Category = product.Category,
+                    TreeType = product.TreeType,
+                    ProductStores = product.ProductStores,
+                    Comments = product.Comments,
+                };
+            }
             return model;
         }
         public async Task<EditProductViewModel> GetProductForEditByIdAsync(Guid id)

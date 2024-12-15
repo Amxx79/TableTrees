@@ -68,8 +68,24 @@ namespace TableTree.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            var guid = Guid.Parse(id);
-            var model = await this.productService.GetProductDetailsByIdAsync(guid);
+            if (id.Length != 36)
+            {
+                return BadRequest();
+            }
+
+            Guid productId;
+            var isGuidValid = Guid.TryParse(id, out productId);
+
+            ProductDetailsViewModel model = null;
+            if (isGuidValid)
+            {
+                model = await this.productService.GetProductDetailsByIdAsync(productId);
+            }
+
+            if (model == null)
+            {
+                return this.BadRequest();
+            }
 
             return this.View(model);
         }
